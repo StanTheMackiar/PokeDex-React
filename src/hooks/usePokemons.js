@@ -13,10 +13,8 @@ const usePokemons = () => {
           try {
             setLoading(true);
             for (let i = 1; i <= 905; i++) {
-              const pokemon = await helpHttp().get(`${urlBase}/pokemon/${i}`)
-              console.log(pokemon);
-              pokemonData = [...pokemonData, pokemon]
-
+              pokemonData = [...pokemonData, await helpHttp().get(`${urlBase}/pokemon/${i}`)]
+              console.log(pokemonData);
             }
           } 
           catch (error) {

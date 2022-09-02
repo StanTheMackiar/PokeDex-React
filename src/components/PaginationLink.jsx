@@ -14,6 +14,7 @@ export default function PaginationLink({ page, setPage, pokemons }) {
 
   useEffect(() => {
     if(pokemons) setNavPages(Math.ceil(pokemons / 20));
+    if(!pokemons) setNavPages(1)
   }, [pokemons]);
 
 

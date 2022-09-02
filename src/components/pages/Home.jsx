@@ -12,6 +12,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
 
+
   let pokemonLength;
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
 
   useEffect(() => {
     setPokemons(pokemonLength);
-    if (pokemons) console.log(pokemons);
+    console.log(`Total Pokemones: ${pokemonLength}`);
   }, [response, search]);
 
   const rangePokemons = () => {
@@ -43,7 +44,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
           ...filterType1,
           ...filterType2,
         ];
-        pokemonLength = filtered.length;
+        pokemonLength = filtered.length
         return filtered.slice(currentPage, currentPage + 20);
       }
     }
@@ -61,13 +62,13 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
   return (
     <section id="content">
       {loading && (
-        <CircularProgress
-          size={70}
-          sx={{
-            color: "yellow",
-            margin: "10rem auto 8rem auto",
-          }}
-        />
+          <CircularProgress
+            size={70}
+            sx={{
+              color: "yellow",
+              margin: "10rem auto 8rem auto",
+            }}
+          />
       )}
       {response === false && (
         <Message
@@ -89,7 +90,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
                 <img
                   onClick={handleClick}
                   id={`${card.id}`}
-                  src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${card.id
+                  src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${card.id &&card.id
                     .toString()
                     .padStart(3, "0")}.png`}
                   className="imgCard"
