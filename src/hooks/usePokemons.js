@@ -5,40 +5,32 @@ const usePokemons = () => {
     const [loading, setLoading] = useState(false)
     const [response, setResponse] = useState(null);
 
-    const urlBase = "https://pokeapi.co/api/v2/"
+    const urlBase = "https://pokeapi.co/api/v2"
     let pokemonData = []
 
     useEffect(()=> {
         const getURLPokemons = async () => {
           try {
             setLoading(true);
-            let res = await helpHttp().get(`${urlBase}pokemon?limit=905`)
-            res.results.map(el => fetchPokemons(el.url))
-          } catch (e) {
-            setLoading(false)
-            setResponse(false)
-            console.log(e);
+            for (let i = 1; i <= 905; i++) {
+              const pokemon = await helpHttp().get(`${urlBase}/pokemon/${i}`)
+              console.log(pokemon);
+              pokemonData = [...pokemonData, pokemon]
+
+            }
+          } 
+          catch (error) {
+            console.log(error);
+          } 
+          finally {
+            setLoading(false);
+            sortArray(pokemonData);
+            !pokemonData[0].err ? setResponse(pokemonData) : setResponse(false)
           }
         }
-
         getURLPokemons()
       },[])
 
-      const fetchPokemons = async (url) => {
-        try {
-          let res = await helpHttp().get(url)
-          pokemonData = [...pokemonData, res];
-          setResponse(sortArray(pokemonData))
-          // console.log(pokemonData);
-          
-        } catch (e) {
-          console.log(false);
-          setResponse(e)
-        } finally {
-          setLoading(false);
-        }
-      }
-      
       const sortArray = (array) => array.sort(function(a, b) {
         return a.id-b.id
       });

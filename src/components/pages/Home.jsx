@@ -8,7 +8,7 @@ import Message from "../Message";
 import "./Home.css";
 import { Link } from "react-router-dom";
 
-const Home = ({ search, page, response, loading, pokemons, setPokemons}) => {
+const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
 
@@ -18,34 +18,36 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons}) => {
     setCurrentPage((page - 1) * 20);
   }, [page]);
 
-  useEffect(()=> {
-    setPokemons(pokemonLength)
+  useEffect(() => {
+    setPokemons(pokemonLength);
     if (pokemons) console.log(pokemons);
-  }, [response, search])
+  }, [response, search]);
 
   const rangePokemons = () => {
-    if (search.length === 0) {
-      pokemonLength = response.length
-      return response.slice(currentPage, currentPage + 20)
+    if (response){
+      if (search.length === 0) {
+        pokemonLength = response.length;
+        return response.slice(currentPage, currentPage + 20);
+      } else {
+        const filterName = response.filter((el) => el.name.includes(search));
+        const filterID = response.filter((el) => el.id.toString() === search);
+        const filterType1 = response.filter((el) =>
+          el.types[0].type.name.includes(search)
+        );
+        const filterType2 = response.filter(
+          (el) => el.types.length > 1 && el.types[1].type.name.includes(search)
+        );
+        const filtered = [
+          ...filterName,
+          ...filterID,
+          ...filterType1,
+          ...filterType2,
+        ];
+        pokemonLength = filtered.length;
+        return filtered.slice(currentPage, currentPage + 20);
+      }
     }
-    else {
-      const filterName = response.filter((el) => el.name.includes(search));
-      const filterID = response.filter((el) => el.id.toString() === search);
-      const filterType1 = response.filter((el) =>
-        el.types[0].type.name.includes(search)
-      );
-      const filterType2 = response.filter(
-        (el) => el.types.length > 1 && el.types[1].type.name.includes(search)
-      );
-      const filtered = [
-        ...filterName,
-        ...filterID,
-        ...filterType1,
-        ...filterType2,
-      ];
-      pokemonLength = filtered.length
-      return filtered.slice(currentPage, currentPage + 20);
-    }
+ 
   };
 
   const firstLetterToUpperCase = (str) => {
@@ -69,7 +71,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons}) => {
       )}
       {response === false && (
         <Message
-          msg="Ocurrio un error al consultar la base de datos"
+          msg="Error :("
           bgColor="rgb(164, 14, 14)"
           color="yellow"
         />
