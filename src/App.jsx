@@ -64,7 +64,7 @@ function App() {
             }
           />
         </Routes>
-        {response && <PaginationLink page={page} setPage={setPage} />}
+        {response && <PaginationLink page={page} setPage={setPage} pokemons={pokemons}/>}
       </HashRouter>
 
       <Footer />
