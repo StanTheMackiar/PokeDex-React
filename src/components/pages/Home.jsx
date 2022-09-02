@@ -43,7 +43,6 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons}) => {
         ...filterType1,
         ...filterType2,
       ];
-      console.log(filtered);
       pokemonLength = filtered.length
       return filtered.slice(currentPage, currentPage + 20);
     }
