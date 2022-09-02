@@ -7,11 +7,11 @@ import Message from "../Message";
 //Css
 import "./Home.css";
 import { Link } from "react-router-dom";
+import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 
-const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
+const Home = ({ search, page, response, loading, setPokemons }) => {
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
-
 
   let pokemonLength;
 
@@ -25,7 +25,7 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
   }, [response, search]);
 
   const rangePokemons = () => {
-    if (response){
+    if (response) {
       if (search.length === 0) {
         pokemonLength = response.length;
         return response.slice(currentPage, currentPage + 20);
@@ -44,38 +44,27 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
           ...filterType1,
           ...filterType2,
         ];
-        pokemonLength = filtered.length
+        pokemonLength = filtered.length;
         return filtered.slice(currentPage, currentPage + 20);
       }
     }
- 
   };
 
-  const firstLetterToUpperCase = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
-  const handleClick = (e) => {
-    console.log(e.target.id);
-  };
 
   return (
     <section id="content">
       {loading && (
-          <CircularProgress
-            size={70}
-            sx={{
-              color: "yellow",
-              margin: "10rem auto 8rem auto",
-            }}
-          />
+        <CircularProgress
+          size={70}
+          sx={{
+            color: "yellow",
+            margin: "10rem auto 8rem auto",
+          }}
+        />
       )}
       {response === false && (
-        <Message
-          msg="Error :("
-          bgColor="rgb(164, 14, 14)"
-          color="yellow"
-        />
+        <Message msg="Error :(" bgColor="rgb(164, 14, 14)" color="yellow" />
       )}
       {response &&
         rangePokemons().map((card, index) => {
@@ -88,17 +77,15 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
             >
               <Link to={`/pokemon/${card.id}`}>
                 <img
-                  onClick={handleClick}
                   id={`${card.id}`}
-                  src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${card.id &&card.id
-                    .toString()
-                    .padStart(3, "0")}.png`}
+                  src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${card.id &&
+                    card.id.toString().padStart(3, "0")}.png`}
                   className="imgCard"
                   alt="sprite"
                 />
               </Link>
               <p className="titleCarld">
-                <strong>{firstLetterToUpperCase(card.name)}</strong>
+                <strong>{helpFirstLetterUC(card.name)}</strong>
               </p>
               <p className="idCard">
                 <em>N.° {card.id.toString().padStart(3, "0")}</em>
@@ -106,12 +93,12 @@ const Home = ({ search, page, response, loading, pokemons, setPokemons }) => {
               <div className="elements">
                 {card.types && (
                   <span className={`${card.types[0].type.name} element`}>
-                    {firstLetterToUpperCase(card.types[0].type.name)}
+                    {helpFirstLetterUC(card.types[0].type.name)}
                   </span>
                 )}
                 {card.types.length > 1 && (
                   <span className={`${card.types[1].type.name} element`}>
-                    {firstLetterToUpperCase(card.types[1].type.name)}
+                    {helpFirstLetterUC(card.types[1].type.name)}
                   </span>
                 )}
               </div>

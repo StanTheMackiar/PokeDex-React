@@ -6,21 +6,19 @@ import styled from "styled-components";
 import header from "../img/header.webp";
 import SearchBar from "./SearchBar";
 
-const Header = ({ search, setSearch, setPage }) => {
-
-
+const Header = ({ search, setSearch, setPage, loading }) => {
   return (
     <HeaderSection>
       <header>
         <a href="/#/">
-          <img style={{ width: "15rem", height: "auto" }} src={header} alt="PokéDex" />
+          <img
+            style={{ width: "15rem", height: "auto" }}
+            src={header}
+            alt="PokéDex"
+          />
         </a>
       </header>
-      <SearchBar 
-      search={search}
-      setSearch={setSearch}
-      setPage={setPage}
-      />
+      {!loading && <SearchBar search={search} setSearch={setSearch} setPage={setPage} />}
     </HeaderSection>
   );
 };
@@ -47,4 +45,3 @@ const HeaderSection = styled.section`
   justify-items: center;
   padding: 0.5rem;
 `;
-

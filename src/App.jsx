@@ -27,17 +27,24 @@ const AppContainer = styled.main`
 `;
 
 function App() {
-  const [ search, setSearch ] = useState("");
-  const [ page, setPage ] = useState("");
-  const { response, loading } = usePokemons()
-  const [ pokemons, setPokemons ] = useState(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const { response, loading } = usePokemons();
+  const [pokemons, setPokemons] = useState(null);
 
   return (
     <AppContainer>
-      <Header search={search} setSearch={setSearch} setPage={setPage} />
+      <Header
+        search={search}
+        setSearch={setSearch}
+        setPage={setPage}
+        loading={loading}
+      />
 
       <HashRouter>
-        {response && <PaginationLink page={page} setPage={setPage} pokemons={pokemons}/>}
+        {response && (
+          <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
+        )}
         <Routes>
           <Route path="*" element={<Error404 />} />
           <Route
@@ -56,15 +63,12 @@ function App() {
           ></Route>
           <Route
             path="/pokemon/:id"
-            element={
-            <Pokemon 
-              res={response}
-              loading={loading} 
-              />
-            }
+            element={<Pokemon response={response} loading={loading} />}
           />
         </Routes>
-        {response && <PaginationLink page={page} setPage={setPage} pokemons={pokemons}/>}
+        {response && (
+          <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
+        )}
       </HashRouter>
 
       <Footer />
