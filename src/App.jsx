@@ -28,7 +28,7 @@ const AppContainer = styled.main`
 
 function App() {
   const [ search, setSearch ] = useState("");
-  const [ page, setPage ] = useState(1);
+  const [ page, setPage ] = useState("");
   const { response, loading } = usePokemons()
   const [ pokemons, setPokemons ] = useState(null);
 
