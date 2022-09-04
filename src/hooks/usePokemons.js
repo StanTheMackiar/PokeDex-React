@@ -100,8 +100,8 @@ const usePokemons = () => {
         };
       });
       setResponse(pokemonData);
-      console.log(pokemonData);
-      console.log(pokemonTypes);
+      // console.log(pokemonData);
+      // console.log(pokemonTypes);
     };
 
     getURLPokemons();
