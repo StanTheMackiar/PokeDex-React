@@ -1,19 +1,26 @@
 // Frameworks
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
-
-// Componentes
 
 //Css
 import "./Home.css";
+
+// Componentes
 import Message from "../../components/Message";
 
-const Home = ({ search, page, response, setPokemons }) => {
+// Helpers
+import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
+import { Zoom } from "@mui/material";
+
+const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
-
+  const [isHigher, setIsHigher] = useState(null);
   let pokemonLength;
+
+  useEffect(() => {
+    setIsPokemonOpen(false);
+  }, []);
 
   useEffect(() => {
     setCurrentPage((page - 1) * 20);
@@ -55,16 +62,15 @@ const Home = ({ search, page, response, setPokemons }) => {
   };
 
   return (
-    <>
-      <section id="content">
-        {response === false && (
-          <Message msg="Error :(" bgColor="rgb(164, 14, 14)" color="yellow" />
-        )}
-        {response &&
-          rangePokemons().map((card) => {
-            return (
+    <section id="content">
+      {response === false && (
+        <Message msg="Error :(" bgColor="rgb(164, 14, 14)" color="yellow" />
+      )}
+      {response &&
+        rangePokemons().map((card) => {
+          return (
+            <Zoom in={true} key={card.id}>
               <div
-                key={card.id}
                 className={`card  ${card.type1 ? card.type1 : `normal`}card`}
               >
                 <Link to={`/pokemon/${card.id}`}>
@@ -77,9 +83,7 @@ const Home = ({ search, page, response, setPokemons }) => {
                     />
                   </div>
                 </Link>
-                <p className="titleCard">
-                  {helpFirstLetterUC(card.name)}
-                </p>
+                <p className="titleCard">{helpFirstLetterUC(card.name)}</p>
                 <p className="idCard">
                   <em>N.° {card.id.toString().padStart(3, "0")}</em>
                 </p>
@@ -96,10 +100,10 @@ const Home = ({ search, page, response, setPokemons }) => {
                   )}
                 </div>
               </div>
-            );
-          })}
-      </section>
-    </>
+            </Zoom>
+          );
+        })}
+    </section>
   );
 };
 

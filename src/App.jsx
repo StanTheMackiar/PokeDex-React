@@ -32,6 +32,7 @@ function App() {
   const [page, setPage] = useState(1);
   const { response, loading } = usePokemons();
   const [pokemons, setPokemons] = useState(null);
+  const [isPokemonOpen, setIsPokemonOpen] = useState(false);
 
   return (
     <AppContainer>
@@ -53,7 +54,7 @@ function App() {
         />
       )}
       <HashRouter>
-        {response && (
+        {response && !isPokemonOpen && (
           <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
         )}
         <Routes>
@@ -64,20 +65,24 @@ function App() {
               <Home
                 search={search}
                 page={page}
-                setPage={setPage}
                 response={response}
-                loading={loading}
                 setPokemons={setPokemons}
-                pokemons={pokemons}
+                setIsPokemonOpen={setIsPokemonOpen}
               />
             }
           ></Route>
           <Route
             path="/pokemon/:id"
-            element={<Pokemon response={response} loading={loading} />}
+            element={
+              <Pokemon
+                response={response}
+                loading={loading}
+                setIsPokemonOpen={setIsPokemonOpen}
+              />
+            }
           />
         </Routes>
-        {response && (
+        {response && !isPokemonOpen && (
           <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
         )}
       </HashRouter>
