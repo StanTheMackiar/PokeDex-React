@@ -1,3 +1,4 @@
+
 #content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 190px));
@@ -24,11 +25,11 @@
     border-radius: 0.5rem;
 }
 .card:hover {
-    width: 11rem;
-    height: 15rem;
+    width: 10.2rem;
+    height: 14.2rem;
     margin: 0;
     box-shadow: 3px 3px 10px rgb(29, 28, 28);
-    transition: all 0.3s ease-in;
+    transition: all 0.2s ease-in;
     cursor: pointer;
 
 }
@@ -43,30 +44,22 @@
     /* align-items: baseline; */
 }
 .titleCard {
-    font-size: 15px;
+    font-size: 16px;
     text-align: center;
     display: block;
-    margin: 0.5rem;
     grid-area: title;
+    font-weight: bold;
 }
-.titleCard:hover{
-    font-size: 17px;
-    text-align: center;
-    display: block;
-    margin: 0.5rem;
-    transition: all 0.3s ease-in;
+.imgBox {
+    background-color: #ffffffa1;
+    grid-area: image;
+    border-radius: 50%;
+    width: 7rem;
+    height: 7rem;
 }
 .imgCard {
-    width: 6rem;
-    height: 6rem;
-    background-color: #ffffffa1;
-    border-radius: 50%;
-    grid-area: image;
-}
-.imgCard:hover {
-    width: 8rem;
-    height: auto;
-    transition: all 0.3s ease-in;
+    width: 7.5rem;
+    height: 7.5rem;
 }
 .elements {
     grid-area: element;

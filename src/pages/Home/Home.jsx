@@ -30,8 +30,12 @@ const Home = ({ search, page, response, setPokemons }) => {
         pokemonLength = response.length;
         return response.slice(currentPage, currentPage + 20);
       } else {
-        const filterName = response.filter((el) => el.name && el.name.includes(search));
-        const filterID = response.filter((el) => el.id && el.id.toString() === search);
+        const filterName = response.filter(
+          (el) => el.name && el.name.includes(search)
+        );
+        const filterID = response.filter(
+          (el) => el.id && el.id.toString() === search
+        );
         const filterType1 = response.filter(
           (el) => el.type1 && el.type1.includes(search)
         );
@@ -64,15 +68,17 @@ const Home = ({ search, page, response, setPokemons }) => {
                 className={`card  ${card.type1 ? card.type1 : `normal`}card`}
               >
                 <Link to={`/pokemon/${card.id}`}>
-                  <img
-                    id={`${card.id}`}
-                    src={card.img}
-                    className="imgCard"
-                    alt="sprite"
-                  />
+                  <div className="imgBox">
+                    <img
+                      id={`${card.id}`}
+                      src={card.img}
+                      className="imgCard"
+                      alt="sprite"
+                    />
+                  </div>
                 </Link>
-                <p className="titleCarld">
-                  <strong>{helpFirstLetterUC(card.name)}</strong>
+                <p className="titleCard">
+                  {helpFirstLetterUC(card.name)}
                 </p>
                 <p className="idCard">
                   <em>N.° {card.id.toString().padStart(3, "0")}</em>
