@@ -1,53 +1,45 @@
-import { CircularProgress } from "@mui/material";
+// FrameWorks
 import React, { useEffect, useState } from "react";
+
+// Hooks y helpers
 import { useParams } from "react-router-dom";
 import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 import "./Pokemon.css";
 
-const Pokemon = ({ response, loading }) => {
-
+const Pokemon = ({ response }) => {
   const [card, setCard] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
     if (response) {
-      console.log(response);
-      const { name, weight } = (response[id-1]);
-      setCard({
-        ...card,
-        name,
-        weight,
-      });
-      console.log(card);
+      const filter = response.find(el => el.id === id)
+      setCard(filter);
     }
-    
   }, [response]);
-
-
 
   return (
     <>
-      {loading && (
-        <CircularProgress
-          size={70}
-          sx={{
-            color: "yellow",
-            margin: "10rem auto 8rem auto",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
-      )}
       {response && (
         <section className="pokeDetailsBox">
           <h2 className="title">{card.name && helpFirstLetterUC(card.name)}</h2>
           <div className="imgContainer">
-            <img className="imgPokemon"
-              src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id
-                .toString()
-                .padStart(3, "0")}.png`}
+            <img
+              className="imgPokemon"
+              src={card.img}
               alt="sprite"
             />
+            <div className="elements">
+              {card.type1 && (
+                <span className={`${card.type1} element`}>
+                  {helpFirstLetterUC(card.type1)}
+                </span>
+              )}
+              {card.type2 && (
+                <span className={`${card.type2} element`}>
+                  {helpFirstLetterUC(card.type2)}
+                </span>
+              )}
+            </div>
           </div>
           <div className="details">
             <p>Weight: {card.weight}</p>

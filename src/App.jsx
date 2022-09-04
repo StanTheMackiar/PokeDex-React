@@ -9,9 +9,10 @@ import Header from "./components/Header";
 // Hooks
 import usePokemons from "./hooks/usePokemons";
 import PaginationLink from "./components/PaginationLink";
-import Error404 from "./components/pages/Error404";
-import Home from "./components/pages/Home";
-import Pokemon from "./components/pages/Pokemon";
+import Error404 from "./pages/Error404";
+import Pokemon from "./pages/Pokemon/Pokemon";
+import Home from "./pages/Home/Home";
+import { CircularProgress } from "@mui/material";
 
 const AppContainer = styled.main`
   /* display: grid;
@@ -40,7 +41,17 @@ function App() {
         setPage={setPage}
         loading={loading}
       />
-
+      {loading && (
+        <CircularProgress
+          size={70}
+          sx={{
+            color: "yellow",
+            margin: "10rem auto 8rem auto",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      )}
       <HashRouter>
         {response && (
           <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
