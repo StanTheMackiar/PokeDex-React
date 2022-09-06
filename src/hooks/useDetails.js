@@ -14,33 +14,33 @@ const useDetails = (id) => {
     const getPokemon = async () => {
       setIsLoading(true);
       const res = await helpHttp().get(`${urlBase}pokemon/${id}`);
-      const species = res.species && (await helpHttp().get(res.species.url));
+      const species = res.species && (await helpHttp().get(res.species.url))
       const evo =
-        species.evolution_chain ?
-        (await helpHttp().get(species.evolution_chain.url)) : null;
+        species.evolution_chain &&
+        (await helpHttp().get(species.evolution_chain.url))
       console.log(res);
       console.log(species);
-      console.log(evo);
+      console.log(evo.chain);
       setIsLoading(false);
 
       const objEvo = () => {
+        
         let img = null;
         let id = null;
 
         if (evo) {
+          const {chain} = evo;
+          if (chain.evolves_to.length === 0) return null
           return {
-            base: evo.chain.species && evo.chain.species.name,
-            evo1: evo.chain.evolves_to.length > 0 && evo.chain.evolves_to[0].species.name,
-            evo2: evo.chain.evolves_to[0].evolves_to.length > 0 ? evo.chain.evolves_to[0].evolves_to[0].species.name : null,
+            base: chain.species && chain.species.name,
+            evo1: chain.evolves_to.length > 0 && chain.evolves_to[0].species.name,
+            evo2: chain.evolves_to[0].evolves_to.length > 0 ? chain.evolves_to[0].evolves_to[0].species.name : null,
           };
-          } 
+        } 
         return null;
       };
 
-      const { base, evo1, evo2 } = objEvo();
 
-
-      console.log(base, evo1, evo2);
 
       const details = () => {
         const type1 = res.types[0] ? res.types[0].type.name : null;
