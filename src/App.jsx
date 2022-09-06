@@ -75,8 +75,6 @@ function App() {
             path="/pokemon/:id"
             element={
               <Pokemon
-                response={response}
-                loading={loading}
                 setIsPokemonOpen={setIsPokemonOpen}
               />
             }

@@ -15,7 +15,6 @@ import { Zoom } from "@mui/material";
 const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
-  const [isHigher, setIsHigher] = useState(null);
   let pokemonLength;
 
   useEffect(() => {

@@ -7,28 +7,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useParams } from "react-router-dom";
 import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 import "./Pokemon.css";
+import useDetails from "../../hooks/useDetails";
 
 // Componente
 
-const Pokemon = ({ response, setIsPokemonOpen }) => {
-  const [card, setCard] = useState({});
+const Pokemon = ({ setIsPokemonOpen }) => {
   const { id } = useParams();
+  const { pokeDetails, loading } = useDetails(id);
 
   // Cuando isPokemonOpen es true, se desactivan los botones de paginacion
   useEffect(() => {
     setIsPokemonOpen(true);
   }, []);
 
-  useEffect(() => {
-    if (response) {
-      const filter = response.find((el) => el.id === id);
-      setCard(filter);
-    }
-  }, [response]);
 
   return (
     <section>
-      {response && (
+      {/* {response && (
         <Grow in={true}>
           <section className="pokeDetailsBox">
             <h2 className="title">
@@ -54,7 +49,7 @@ const Pokemon = ({ response, setIsPokemonOpen }) => {
             </div>
           </section>
         </Grow>
-      )}
+      )} */}
     </section>
   );
 };

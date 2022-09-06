@@ -15,15 +15,13 @@ const usePokemons = () => {
   useEffect(() => {
     const getURLPokemons = async () => {
       setLoading(true);
-      const response1 = await helpHttp().get(urlBase + "pokemon?limit=1133");
+      const response1 = await helpHttp().get(urlBase + "pokemon?limit=905");
       for (let i = 1; i <= 18; i++) {
         const response2 = await helpHttp().get(`${urlBase}type/${i}`);
         types = [...types, response2];
       }
 
       setLoading(false);
-
-      console.log(types);
 
       const getPokemonTypes = (id) => {
         return types[id].pokemon.map((el) => {
@@ -60,7 +58,7 @@ const usePokemons = () => {
         const arrayID = el.url.split("/");
         const id = arrayID[6];
         const name = el.name;
-        const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+        const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${id.toString().padStart("3", 0)}.png`;
         let type1 = null;
         let type2 = null;
 
