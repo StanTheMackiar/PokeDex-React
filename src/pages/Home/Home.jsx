@@ -11,6 +11,7 @@ import Message from "../../components/Message";
 // Helpers
 import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 import { Zoom } from "@mui/material";
+import { helpAddZeros } from "../../helpers/helpAddZeros";
 
 const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
   const [currentPage, setCurrentPage] = useState(page);
@@ -84,7 +85,7 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
                 </Link>
                 <p className="titleCard">{helpFirstLetterUC(card.name)}</p>
                 <p className="idCard">
-                  <em>N.° {card.id.toString().padStart(3, "0")}</em>
+                  <em>N.° {helpAddZeros(card.id)}</em>
                 </p>
                 <div className="elements">
                   {card.type1 && (

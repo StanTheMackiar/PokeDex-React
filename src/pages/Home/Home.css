@@ -7,6 +7,9 @@
   justify-content: center;
   margin-top: 2rem;
 }
+#content p {
+    margin: 0;
+}
 .card {
   width: 10rem;
   height: 14rem;

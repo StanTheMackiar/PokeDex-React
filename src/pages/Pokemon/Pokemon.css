@@ -1,39 +1,52 @@
 .pokeDetailsBox {
     display: grid;
-    grid-template-areas: 
-    "title" 
-    "imgcontainer"
-    "details"
-    "elements"
-    ;
-    justify-items: center;
-    width: 80%;
-    margin: 3rem auto 1rem auto;
-    background-color: rgba(255, 255, 255, 0.425);
-    border-radius: 0.5rem;
-}
-.title {
-    grid-area: title;
-}
-.imgContainer {
-    background-color: white;
-    border-radius: 0.5rem;
-    grid-area: imgcontainer;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 350px;
-    max-height: 400px;
+    width: 80%;
+    margin: 3rem auto 1rem auto;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem 1rem 4rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+.pokeDetailsBox h3 {
+    font-weight: bold;
+    margin: 0.5rem;
+}
+.pokeDetailsBox ul {
+    list-style: none;
+}
+.title {
+    font-size: 30px;
 }
 .imgPokemon {
     max-width: 250px;
     min-width: 150px;
     padding: 2rem 0.5rem;
 }
-.details {
-    margin: 1rem;
+.type{
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    border-radius: 0.3rem;
+}
+.atributes {
     font-family: inherit;
-    font-size: 15px;
-    font-weight: bold;
-    grid-area: details;
+    text-align: center;
+}
+.atribute {
+    margin: 0;
+    padding: 0;
+}
+.description-text {
+    white-space: pre;
+}
+.features {
+    margin: 0.5rem;
+}
+.feature {
+    display: block;
+}
+.progressbar {
+    width: 80%;
+    margin: 0.5rem auto;
 }

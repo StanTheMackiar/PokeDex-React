@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 
 // Helper
+import { helpAddZeros } from "../helpers/helpAddZeros";
 import { helpHttp } from "../helpers/helpHttp";
 
 const useDetails = (id) => {
@@ -16,59 +17,90 @@ const useDetails = (id) => {
     const getPokemon = async () => {
       setIsLoading(true);
       res = await helpHttp().get(`${urlBase}pokemon/${id}`);
-      console.log(res);
       if (!res.err) {
         species = res.species && (await helpHttp().get(res.species.url));
-        console.log(species);
         if (!species.err) {
           evo =
             species.evolution_chain &&
             (await helpHttp().get(species.evolution_chain.url));
-          console.log(evo.chain);
         }
       } else {
         setIsLoading(false);
         return setPokeDetails(res);
       }
-      details(res, species, evo);
-      console.log(details(res, species, evo));
+      setPokeDetails( await details(res, species, evo ));
+      console.log(( await details(res, species, evo )));
+      setIsLoading(false)
     };
 
     getPokemon();
   }, []);
 
-  const objEvo = (evo) => {
-    let img = null;
-    let id = null;
-
-    if (evo) {
+  const getEvoData = async (name) => {
+    const res = await helpHttp().get(`${urlBase}pokemon/${name}`)
+    if (!res.err) {
+      const id = res.id
+      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(id)}`;
+      const type1 = res.types[0] ? res.types[0].type.name : null
+      const type2 = res.types[1] ? res.types[1].type.name : null
+      
       return {
-        base: evo.chain.species && {
-          name: evo.chain.species.name,
-          url: `${urlBase}pokemon/${evo.chain.species.name}`
-        },
-        evo1: evo.chain.evolves_to.length > 0 && {
-          name: evo.chain.evolves_to[0].species.name,
-          url: `${urlBase}pokemon/${evo.chain.evolves_to[0].species.name}`
-        },
-        evo2: evo.chain.evolves_to[0].evolves_to.length > 0 && 
-        {
-          name: evo.chain.evolves_to[0].evolves_to[0].species.name,
-          url: `${urlBase}pokemon/${evo.chain.evolves_to[0].evolves_to[0].species.name}`
-        }
-        
+        name,
+        id,
+        img,
+        type1,
+        type2,
       };
-      } 
-
-    return null;
+    } else {
+      return res;
+    }
   };
 
-  const details = (res, species, evo) => {
+  const getEvolutions = async (evo) => {
+    if (evo) {
+      if (evo.chain.evolves_to.length === 0) return null;
+      let base, evo1, evo2;
+
+      if (evo.chain.species) {
+        const name = evo.chain.species.name;
+        base = await getEvoData(name);
+      }
+      if (evo.chain.evolves_to.length > 0) {
+        const name = evo.chain.evolves_to[0].species.name;
+        evo1 = await getEvoData(name);
+      }
+      if (evo.chain.evolves_to[0].evolves_to.length > 0) {
+        const name = evo.chain.evolves_to[0].evolves_to[0].species.name;
+        evo2 = await getEvoData(name);
+
+        return {
+          base,
+          evo1,
+          evo2,
+        };
+      }
+      return null;
+    }
+  };
+
+  const details = async (res, species, evo) => {
+    const evo_chain = await getEvolutions(evo);
     const type1 = res.types[0] ? res.types[0].type.name : null;
     const type2 = res.types[1] ? res.types[1].type.name : null;
-    const img = res.sprites.other["official-artwork"].front_default;
+    const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(res.id)}.png`;
     const habitat = species.habitat ? species.habitat.name : null;
-    const evo_chain = objEvo(evo);
+    const stats = res.stats && {
+      hp: res.stats[0].base_stat,
+      attack: res.stats[1].base_stat,
+      defense: res.stats[2].base_stat,
+      sp_attack: res.stats[3].base_stat,
+      sp_defense: res.stats[4].base_stat,
+      speed: res.stats[5].base_stat,
+    }
+    const description = species.flavor_text_entries ? species.flavor_text_entries[0].flavor_text : null
+    const ability =  res.abilities ? res.abilities[0].ability.name : null;
+    const color = species.color ? species.color.name : null;
+    
 
     return {
       id: res.id,
@@ -87,6 +119,10 @@ const useDetails = (id) => {
       habitat,
       evo_chain,
       varieties: species.varieties,
+      ability,
+      stats,
+      description,
+      color,
     };
   };
 

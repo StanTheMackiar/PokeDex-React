@@ -41,18 +41,8 @@ function App() {
         setSearch={setSearch}
         setPage={setPage}
         loading={loading}
+        isPokemonOpen={isPokemonOpen}
       />
-      {loading && (
-        <CircularProgress
-          size={70}
-          sx={{
-            color: "yellow",
-            margin: "10rem auto 8rem auto",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
-      )}
       <HashRouter>
         {response && !isPokemonOpen && (
           <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
@@ -62,22 +52,31 @@ function App() {
           <Route
             path="/"
             element={
-              <Home
-                search={search}
-                page={page}
-                response={response}
-                setPokemons={setPokemons}
-                setIsPokemonOpen={setIsPokemonOpen}
-              />
+              <>
+                {loading && (
+                  <CircularProgress
+                    size={70}
+                    sx={{
+                      color: "yellow",
+                      margin: "10rem auto 8rem auto",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  />
+                )}
+                <Home
+                  search={search}
+                  page={page}
+                  response={response}
+                  setPokemons={setPokemons}
+                  setIsPokemonOpen={setIsPokemonOpen}
+                />
+              </>
             }
           ></Route>
           <Route
             path="/pokemon/:id"
-            element={
-              <Pokemon
-                setIsPokemonOpen={setIsPokemonOpen}
-              />
-            }
+            element={<Pokemon setIsPokemonOpen={setIsPokemonOpen} />}
           />
         </Routes>
         {response && !isPokemonOpen && (

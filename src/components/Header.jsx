@@ -6,7 +6,7 @@ import styled from "styled-components";
 import header from "../img/header.webp";
 import SearchBar from "./SearchBar";
 
-const Header = ({ search, setSearch, setPage, loading }) => {
+const Header = ({ search, setSearch, setPage, loading, isPokemonOpen }) => {
   return (
     <HeaderSection>
       <header>
@@ -18,7 +18,7 @@ const Header = ({ search, setSearch, setPage, loading }) => {
           />
         </a>
       </header>
-      {!loading && <SearchBar search={search} setSearch={setSearch} setPage={setPage} />}
+      {!loading && !isPokemonOpen && <SearchBar search={search} setSearch={setSearch} setPage={setPage} />}
     </HeaderSection>
   );
 };
