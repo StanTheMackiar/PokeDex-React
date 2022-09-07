@@ -17,16 +17,18 @@ const useDetails = (id) => {
     const getPokemon = async () => {
       setIsLoading(true);
       res = await helpHttp().get(`${urlBase}pokemon/${id}`);
+      console.log(res);
       if (!res.err) {
         species = res.species && (await helpHttp().get(res.species.url));
         if (!species.err) {
           evo =
             species.evolution_chain &&
             (await helpHttp().get(species.evolution_chain.url));
+            console.log(evo);
         }
       } else {
         setIsLoading(false);
-        return setPokeDetails(res);
+        return setPokeDetails(null);
       }
       setPokeDetails( await details(res, species, evo ));
       console.log(( await details(res, species, evo )));
@@ -34,13 +36,13 @@ const useDetails = (id) => {
     };
 
     getPokemon();
-  }, []);
+  }, [id]);
 
   const getEvoData = async (name) => {
     const res = await helpHttp().get(`${urlBase}pokemon/${name}`)
     if (!res.err) {
       const id = res.id
-      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(id)}`;
+      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(id)}.png`;
       const type1 = res.types[0] ? res.types[0].type.name : null
       const type2 = res.types[1] ? res.types[1].type.name : null
       
@@ -79,8 +81,8 @@ const useDetails = (id) => {
           evo2,
         };
       }
-      return null;
     }
+    return null;
   };
 
   const details = async (res, species, evo) => {
@@ -98,7 +100,7 @@ const useDetails = (id) => {
       speed: res.stats[5].base_stat,
     }
     const description = species.flavor_text_entries ? species.flavor_text_entries[0].flavor_text : null
-    const ability =  res.abilities ? res.abilities[0].ability.name : null;
+    const ability =  res.abilities.length > 0 ? res.abilities[0].ability.name : null;
     const color = species.color ? species.color.name : null;
     
 
@@ -129,6 +131,8 @@ const useDetails = (id) => {
   return {
     pokeDetails,
     isLoading,
+    setPokeDetails,
+    setIsLoading,
   };
 };
 

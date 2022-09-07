@@ -16,9 +16,6 @@
 .pokeDetailsBox ul {
     list-style: none;
 }
-.title {
-    font-size: 30px;
-}
 .imgPokemon {
     max-width: 250px;
     min-width: 150px;

@@ -7,11 +7,13 @@ import "./Home.css";
 
 // Componentes
 import Message from "../../components/Message";
+import Card from "../../components/Card/Card";
 
 // Helpers
 import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 import { Zoom } from "@mui/material";
 import { helpAddZeros } from "../../helpers/helpAddZeros";
+import { Box } from "@mui/system";
 
 const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
   const [currentPage, setCurrentPage] = useState(page);
@@ -66,41 +68,19 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
       {response === false && (
         <Message msg="Error :(" bgColor="rgb(164, 14, 14)" color="yellow" />
       )}
+
       {response &&
         rangePokemons().map((card) => {
           return (
-            <Zoom in={true} key={card.id}>
-              <div
-                className={`card  ${card.type1 ? card.type1 : `normal`}card`}
-              >
-                <Link to={`/pokemon/${card.id}`}>
-                  <div className="imgBox">
-                    <img
-                      id={`${card.id}`}
-                      src={card.img}
-                      className="imgCard"
-                      alt="sprite"
-                    />
-                  </div>
-                </Link>
-                <p className="titleCard">{helpFirstLetterUC(card.name)}</p>
-                <p className="idCard">
-                  <em>N.° {helpAddZeros(card.id)}</em>
-                </p>
-                <div className="elements">
-                  {card.type1 && (
-                    <span className={`${card.type1} element`}>
-                      {helpFirstLetterUC(card.type1)}
-                    </span>
-                  )}
-                  {card.type2 && (
-                    <span className={`${card.type2} element`}>
-                      {helpFirstLetterUC(card.type2)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </Zoom>
+            <Card
+              key={card.id}
+              type1={card.type1}
+              type2={card.type2}
+              id={card.id}
+              img={card.img}
+              name={card.name}
+              transition={"transition"}
+            />
           );
         })}
     </section>
