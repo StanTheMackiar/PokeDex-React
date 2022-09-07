@@ -1,5 +1,5 @@
 .pokeDetailsBox {
-    display: grid;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: 80%;
@@ -38,7 +38,8 @@
     padding: 0;
 }
 .description-text {
-    white-space: pre;
+    white-space: pre-wrap;
+
 }
 .features {
     margin: 0.5rem;
@@ -47,6 +48,6 @@
     display: block;
 }
 .progressbar {
-    width: 80%;
+    width: 100%;
     margin: 0.5rem auto;
 }
