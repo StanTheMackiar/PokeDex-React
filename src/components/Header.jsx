@@ -1,5 +1,6 @@
 // Frameworks
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // Imagen Header
@@ -10,13 +11,13 @@ const Header = ({ search, setSearch, setPage, loading, isPokemonOpen }) => {
   return (
     <HeaderSection>
       <header>
-        <a href="/#/">
+        <Link to="/" onClick={() => setSearch("")}>
           <img
             style={{ width: "15rem", height: "auto" }}
             src={header}
             alt="PokéDex"
           />
-        </a>
+        </Link>
       </header>
       {!loading && !isPokemonOpen && <SearchBar search={search} setSearch={setSearch} setPage={setPage} />}
     </HeaderSection>

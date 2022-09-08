@@ -11,7 +11,7 @@ const NavPokemonDetails = ({ id, setSlideEffect }) => {
       )`,
     boxShadow: "2px 2px 5px rgb(87, 17, 17)",
     color: "yellow",
-    padding: "5rem 0.5rem",
+    padding: "5rem 0.2rem",
     position: "fixed",
     zIndex: "999",
     top: "50%",

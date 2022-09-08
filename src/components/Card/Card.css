@@ -28,7 +28,7 @@
 .idCard {
   grid-area: id;
   font-size: 0.8rem;
-  background-color: rgba(255, 255, 255, 0.432);
+  background-color: rgba(255, 255, 255, 0.322);
   padding: 0.1rem;
   border-radius: 0.5rem;
 }
@@ -39,12 +39,23 @@
   grid-area: title;
   font-weight: bold;
 }
+.title-evolve {
+  color: white; 
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.219);
+  border-radius: 0.5rem;
+  padding: 0 1rem; 
+  font-size: 18px;
+}
 .imgBox {
   background-color: rgba(255, 255, 255, 0.521);
   border-radius: 50%;
   grid-area: image;
   width: 7rem;
   height: 7rem;
+}
+.img-border {
+  border: solid rgba(77, 75, 75, 0.952)
 }
 .imgCard {
   width: 7.5rem;
@@ -58,6 +69,7 @@
   margin: 1px;
   padding: 2px 0.5rem;
   border-radius: 0.3rem;
+  color: black;
 }
 .grass {
   background-color: rgb(156, 238, 49);
@@ -78,6 +90,7 @@
     rgb(223, 221, 221) 56%,
     rgba(0, 127, 255, 1) 100%
   );
+  color: black;
 }
 .water {
   background-color: rgb(65, 122, 245);
@@ -141,16 +154,19 @@
   color: white;
 }
 /* ESTILO DE CARTA POR ELEMENTO */
-.grasscard {
+.bgColor {
+  color: black;
+}
+.grass.bgColor {
   background-color: rgb(200, 255, 208);
 }
-.poisoncard {
+.poison.bgColor {
   background-color: rgb(233, 209, 255);
 }
-.firecard {
+.fire.bgColor {
   background-color: rgb(255, 212, 173);
 }
-.flyingcard {
+.flying.bgColor {
   background: rgb(182, 182, 182);
   background: linear-gradient(
     0deg,
@@ -158,45 +174,49 @@
     rgb(78, 160, 241) 100%
   );
 }
-.watercard {
+.water.bgColor {
   background-color: rgb(187, 204, 241);
 }
-.bugcard {
+.bug.bgColor {
   background-color: rgb(228, 245, 196);
 }
-.normalcard {
+.normal.bgColor {
   background-color: rgb(231, 229, 229);
 }
-.electriccard {
+.electric.bgColor {
   background-color: rgb(241, 236, 159);
 }
-.groundcard {
+.ground.bgColor {
   background: rgb(231, 213, 145);
 }
-.fairycard {
+.fairy.bgColor {
   background-color: rgb(247, 218, 245);
 }
-.fightingcard {
+.fighting.bgColor {
   background-color: rgb(240, 178, 167);
 }
-.psychiccard {
+.psychic.bgColor {
   background-color: rgb(255, 211, 240);
 }
-.icecard {
+.ice.bgColor {
   background-color: rgb(191, 237, 248);
 }
-.steelcard {
+.steel.bgColor {
   background-color: rgb(219, 212, 255);
 }
-.rockcard {
+.rock.bgColor {
   background-color: rgb(209, 187, 141);
 }
-.ghostcard {
+.ghost.bgColor {
   background-color: rgb(208, 189, 243);
 }
-.dragoncard {
+.dragon.bgColor {
   background: rgb(247, 196, 196);
 }
-.darkcard {
+.dark.bgColor {
   background-color: rgb(170, 170, 170);
+}
+.no-bg {
+  background: none;
+
 }

@@ -31,7 +31,7 @@ const usePokemons = () => {
       }
 
       setLoading(false);
-      setResponse(pokemonData(getPokemonTypes()));
+      setResponse(pokemonData(getPokemonTypes()))
     };
 
     getURLPokemons();

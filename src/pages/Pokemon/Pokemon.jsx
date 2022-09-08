@@ -2,13 +2,15 @@
 import { CircularProgress, Slide } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 // Css
 import "./Pokemon.css";
 
 // Hooks
 import useDetails from "../../hooks/useDetails";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // Helpers
 import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
@@ -21,21 +23,30 @@ import Stats from "../../components/Stats";
 import NavPokemonDetails from "../../components/NavPokemonDetails";
 import Message from "../../components/Message";
 import SelectPokemon from "../../components/SelectPokemon";
+import helpNamePokemons from "../../helpers/helpNamePokemons";
 
 const Pokemon = ({ setIsPokemonOpen, page }) => {
   const { id } = useParams();
   const { pokeDetails: card, isLoading } = useDetails(id);
   const [slideEffect, setSlideEffect] = useState("up");
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsPokemonOpen(true);
-  }, []);
+  }, [setIsPokemonOpen]);
 
   const addComma = (str) => {
-    let newstr = str.slice(0, -1) + "." + str.slice(-1);
+    let newstr = str.toString().slice(0, -1) + "." + str.toString().slice(-1);
     newstr = parseFloat(newstr);
     return newstr;
+  };
+
+  const buttonStyles = {
+    cursor: "pointer",
+    color: "white",
+    background: "linear-gradient(#ad2121 20%, rgb(202, 50, 12) 100%)",
+    borderRadius: "20%",
+    padding: "0.3rem",
   };
 
   return (
@@ -60,9 +71,23 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
       )}
       {card && !isLoading && (
         <>
-          <NavPokemonDetails id={id} setSlideEffect={setSlideEffect} />
-          <Slide direction={slideEffect} in={true}>
+          {/* Botones navegacion */}
+          <NavPokemonDetails
+            id={id}
+            setSlideEffect={setSlideEffect}
+          />
+          {/* Transicion */}
+          <Slide
+            direction={slideEffect}
+            in={true}>
+            {/* Contenedor principal */}
             <section className="pokeDetailsBox">
+              <div className="back-button">
+                <KeyboardReturnIcon
+                  sx={buttonStyles}
+                  onClick={() => navigate(-1)}
+                />
+              </div>
 
               <div className="select-pokemon">
                 <SelectPokemon
@@ -73,41 +98,36 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
 
               <div className="close-button">
                 <Link to={`/?page=${page}`}>
-                  <Close
-                    sx={{
-                      cursor: "pointer",
-                      color: "white",
-                      background:
-                        "linear-gradient(#ad2121 20%, rgb(202, 50, 12) 100%)",
-                      borderRadius: "20%",
-                      padding: "0.3rem",
-                    }}
-                  />
+                  <Close sx={buttonStyles} />
                 </Link>
               </div>
 
               <div className="title">
-                <h2 className={`${card.type1.toLowerCase()}`}>{card.name}</h2>
-                <p>
+                <h2>
+                  {card.name}{" "}
                   <span style={{ color: "#727171" }}>
                     <i>#{helpAddZeros(id)}</i>
                   </span>
-                </p>
+                </h2>
               </div>
 
-              <div className={`imgContainer ${card.type1.toLowerCase()}card`}>
-                <img className="imgPokemon" src={card.img} alt="sprite" />
+              <div className={`imgContainer ${card.type1} bgColor`}>
+                <img
+                  className="imgPokemon"
+                  src={card.img}
+                  alt="sprite"
+                />
               </div>
 
               <div className="types">
                 {card.type1 && (
-                  <p className={`${card.type1.toLowerCase()} type`}>
-                    {(card.type1)}
+                  <p className={`${card.type1} type`}>
+                    {helpNamePokemons(card.type1)}
                   </p>
                 )}
                 {card.type2 && (
-                  <p className={`${card.type2.toLowerCase()} type`}>
-                    {(card.type2)}
+                  <p className={`${card.type2} type`}>
+                    {helpNamePokemons(card.type2)}
                   </p>
                 )}
               </div>
@@ -116,47 +136,56 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 {card.weight && (
                   <Atributes
                     title={<b>Weight: </b>}
-                    value={`${addComma(card.weight.toString())} kg`}
+                    value={`${addComma(card.weight)} kg`}
                   />
                 )}
                 {card.height && (
                   <Atributes
                     title={<strong>Height: </strong>}
-                    value={`${card.height / 100} m`}
+                    value={`${addComma(card.height)} m`}
                   />
                 )}
                 {card.ability && (
                   <Atributes
                     title={<b>Ability: </b>}
-                    value={(card.ability)}
+                    value={card.ability}
                   />
                 )}
                 {card.habitat && (
                   <Atributes
                     title={<b>Habitat: </b>}
-                    value={(card.habitat)}
+                    value={card.habitat}
                   />
                 )}
                 {card.color && (
                   <Atributes
                     title={<b>Color: </b>}
-                    value={(card.color)}
+                    value={card.color}
                   />
                 )}
                 {card.generation && (
                   <Atributes
                     title={<b>Generation: </b>}
-                    value={(card.generation)}
+                    value={card.generation}
                   />
                 )}
                 {card.features.is_legendary && (
-                  <Atributes title={<b>Legendary Pokémon</b>} value={""} />
+                  <Atributes
+                    title={<b>Legendary Pokémon</b>}
+                    value={""}
+                  />
                 )}
                 {card.features.is_mythical && (
-                  <Atributes title={<b>Mythical Pokémon</b>} value={""} />
+                  <Atributes
+                    title={<b>Mythical Pokémon</b>}
+                    value={""}
+                  />
                 )}
                 {card.features.is_baby && (
-                  <Atributes title={<b>Baby Pokémon</b>} value={""} />
+                  <Atributes
+                    title={<b>Baby Pokémon</b>}
+                    value={""}
+                  />
                 )}
               </div>
 
@@ -165,64 +194,125 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
               </div>
 
               <div className="stats">
-                <Stats title="HP" value={card.stats.hp} />
-                <Stats title="Attack" value={card.stats.attack} />
-                <Stats title="Defense" value={card.stats.defense} />
-                <Stats title="Special Attack" value={card.stats.sp_attack} />
-                <Stats title="Special Defense" value={card.stats.sp_defense} />
-                <Stats title="Speed" value={card.stats.speed} />
+                <Stats
+                  title="HP"
+                  value={card.stats.hp}
+                />
+                <Stats
+                  title="Attack"
+                  value={card.stats.attack}
+                />
+                <Stats
+                  title="Defense"
+                  value={card.stats.defense}
+                />
+                <Stats
+                  title="Special Attack"
+                  value={card.stats.sp_attack}
+                />
+                <Stats
+                  title="Special Defense"
+                  value={card.stats.sp_defense}
+                />
+                <Stats
+                  title="Speed"
+                  value={card.stats.speed}
+                />
               </div>
 
-              {card.evo_chain ? (
+              {card.evo_chain && (
                 <div className="evochain">
-                  <h3>Evolutionary Chain</h3>
-                  {card.evo_chain.base && (
-                    <div className="base">
-                      <h4>Base</h4>
+                  <h3>Evolutions</h3>
+                  {card.evo_chain[0] && (
+                    <div className="evo-unique">
                       <Card
-                        img={card.evo_chain.base.img}
-                        name={card.evo_chain.base.name}
-                        id={card.evo_chain.base.id}
-                        type1={card.evo_chain.base.type1}
-                        type2={card.evo_chain.base.type2}
+                        img={card.evo_chain[0].img}
+                        name={card.evo_chain[0].name}
+                        id={card.evo_chain[0].id}
+                        type1={card.evo_chain[0].type1}
+                        type2={card.evo_chain[0].type2}
                         transition={"no-transition"}
+                        bg={"no-bg"}
+                        imgBorder={"img-border"}
+                        titleEvolve={"title-evolve"}
                       />
                     </div>
                   )}
-                  {card.evo_chain.evo1 && (
-                    <div className="evo1">
-                      <h4>{card.evo_chain.evo2 ? "Middle" : "Final"}</h4>
-                      <Card
-                        img={card.evo_chain.evo1.img}
-                        name={card.evo_chain.evo1.name}
-                        id={card.evo_chain.evo1.id}
-                        type1={card.evo_chain.evo1.type1}
-                        type2={card.evo_chain.evo1.type2}
-                        transition={"no-transition"}
-                      />
-                    </div>
+                  {card.evo_chain[1] && (
+                    <>
+                      <div className="arrow-evo">
+                        <KeyboardDoubleArrowDownIcon
+                          sx={{
+                            color: "white",
+                            backgroundColor: "rgba(255, 255, 255, 0.178)",
+                            padding: "0.5rem",
+                            borderRadius: "0.3rem",
+                          }}
+                        />
+                      </div>
+
+                      {card.evo_chain[1].map((el) => {
+                        return (
+                          <div
+                            className={
+                              card.evo_chain[1].length > 1
+                                ? "evo-various"
+                                : "evo-unique"
+                            }>
+                            <Card
+                              key={`${el.id}0`}
+                              img={el.img}
+                              name={el.name}
+                              id={el.id}
+                              type1={el.type1}
+                              type2={el.type2}
+                              transition={"no-transition"}
+                              bg={"no-bg"}
+                              imgBorder={"img-border"}
+                              titleEvolve={"title-evolve"}
+                            />
+                          </div>
+                        );
+                      })}
+                    </>
                   )}
-                  {card.evo_chain.evo2 && (
-                    <div className="evo2">
-                      <h4>{card.evo_chain.evo2 && "Final"}</h4>
-                      <Card
-                        className={"evofinal"}
-                        img={card.evo_chain.evo2.img}
-                        name={card.evo_chain.evo2.name}
-                        id={card.evo_chain.evo2.id}
-                        type1={card.evo_chain.evo2.type1}
-                        type2={card.evo_chain.evo2.type2}
-                        transition={"no-transition"}
-                      />
-                    </div>
+                  {card.evo_chain[2] && (
+                    <>
+                      <div className="arrow-evo">
+                        <KeyboardDoubleArrowDownIcon
+                          sx={{
+                            color: "white",
+                            backgroundColor: "rgba(255, 255, 255, 0.178)",
+                            padding: "0.5rem",
+                            borderRadius: "0.3rem",
+                          }}
+                        />
+                      </div>
+                      {card.evo_chain[2].map((el) => {
+                        return (
+                          <div
+                            className={
+                              card.evo_chain[2].length > 1
+                                ? "evo-various"
+                                : "evo-unique"
+                            }>
+                            <Card
+                              key={`${el.id}1`}
+                              img={el.img}
+                              name={el.name}
+                              id={el.id}
+                              type1={el.type1}
+                              type2={el.type2}
+                              transition={"no-transition"}
+                              bg={"no-bg"}
+                              imgBorder={"img-border"}
+                              titleEvolve={"title-evolve"}
+                            />
+                          </div>
+                        );
+                      })}
+                    </>
                   )}
-                </div>
-              ) : (
-                <div className="no-evo">
-                  <h3>
-                    {helpFirstLetterUC(card.name)} does not come from or evolve
-                    into any Pokémon.
-                  </h3>
                 </div>
               )}
             </section>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Route, Routes, HashRouter } from "react-router-dom";
 
 // Componentes
@@ -14,19 +13,6 @@ import Pokemon from "./pages/Pokemon/Pokemon";
 import Home from "./pages/Home/Home";
 import { CircularProgress } from "@mui/material";
 
-const AppContainer = styled.main`
-  /* display: grid;
-  grid-template-areas: 
-    "."
-    "header"
-    "message"
-    "paginationTop"
-    "spinner"
-    "cards"
-    "navbuttons"
-    "footer"; */
-`;
-
 function App() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -35,7 +21,7 @@ function App() {
   const [isPokemonOpen, setIsPokemonOpen] = useState(false);
 
   return (
-    <AppContainer>
+    <HashRouter>
       <Header
         search={search}
         setSearch={setSearch}
@@ -43,49 +29,61 @@ function App() {
         loading={loading}
         isPokemonOpen={isPokemonOpen}
       />
-      <HashRouter>
-        {response && !isPokemonOpen && (
-          <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
-        )}
-        <Routes>
-          <Route path="*" element={<Error404 />} />
-          <Route
-            path="/"
-            element={
-              <>
-                {loading && (
-                  <CircularProgress
-                    size={70}
-                    sx={{
-                      color: "yellow",
-                      margin: "10rem auto 8rem auto",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  />
-                )}
-                <Home
-                  search={search}
-                  page={page}
-                  response={response}
-                  setPokemons={setPokemons}
-                  setIsPokemonOpen={setIsPokemonOpen}
+      {response && !isPokemonOpen && (
+        <PaginationLink
+          page={page}
+          setPage={setPage}
+          pokemons={pokemons}
+        />
+      )}
+      <Routes>
+        <Route
+          path="*"
+          element={<Error404 />}
+        />
+        <Route
+          path="/"
+          element={
+            <>
+              {loading && (
+                <CircularProgress
+                  size={70}
+                  sx={{
+                    color: "yellow",
+                    margin: "10rem auto 8rem auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 />
-              </>
-            }
-          ></Route>
-          <Route
-            path="/pokemon/:id"
-            element={<Pokemon setIsPokemonOpen={setIsPokemonOpen} page={page} />}
-          />
-        </Routes>
-        {response && !isPokemonOpen && (
-          <PaginationLink page={page} setPage={setPage} pokemons={pokemons} />
-        )}
-      </HashRouter>
-
+              )}
+              <Home
+                search={search}
+                page={page}
+                response={response}
+                setPokemons={setPokemons}
+                setIsPokemonOpen={setIsPokemonOpen}
+              />
+            </>
+          }></Route>
+        <Route
+          path="/pokemon/:id"
+          element={
+            <Pokemon
+              setIsPokemonOpen={setIsPokemonOpen}
+              page={page}
+            />
+          }
+        />
+      </Routes>
+      {response && !isPokemonOpen && (
+        <PaginationLink
+          page={page}
+          setPage={setPage}
+          pokemons={pokemons}
+        />
+      )}
       <Footer />
-    </AppContainer>
+    </HashRouter>
   );
 }
 
