@@ -23,15 +23,20 @@ const NavPokemonDetails = ({ id, setSlideEffect }) => {
 
   return (
     <>
-      {parseInt(id) > 1 && (
-        <Link to={`/pokemon/${parseInt(id) - 1}`}>
-          <ArrowBackIos sx={left} onClick={() => setSlideEffect("right")} />
-        </Link>
-      )}
-      {parseInt(id) < 905 && (
-        <Link to={`/pokemon/${parseInt(id) + 1}`}>
-          <ArrowForwardIos sx={right} onClick={() => setSlideEffect("left")} />
-        </Link>
+      {parseInt(id) <= 905 && (
+        <>
+          {parseInt(id) > 1 && (
+            <Link to={`/pokemon/${parseInt(id) - 1}`}>
+              <ArrowBackIos sx={left} onClick={() => setSlideEffect("right")} />
+            </Link>
+          )}
+          {parseInt(id) !== 905 && (<Link to={`/pokemon/${parseInt(id) + 1}`}>
+            <ArrowForwardIos
+              sx={right}
+              onClick={() => setSlideEffect("left")}
+            />
+          </Link>)} 
+        </>
       )}
     </>
   );

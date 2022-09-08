@@ -9,7 +9,7 @@ export default function PaginationLink({ page, setPage, pokemons }) {
   const [navPages, setNavPages] = useState(46);
 
   useEffect(() => {
-    setPage((parseFloat(query.get("page") || 1)));
+    setPage((parseFloat(query.get("page") || page)));
   }, [search]);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export default function PaginationLink({ page, setPage, pokemons }) {
     <Pagination
       page={page}
       count={navPages}
-      color="primary"
       shape="rounded"
+      color={"primary"}
       siblingCount={0}
       sx={{
         margin: "1rem",
@@ -33,7 +33,7 @@ export default function PaginationLink({ page, setPage, pokemons }) {
       renderItem={(item) => (
         <PaginationItem
           component={Link}
-          to={`/${item.page === 1 ? "" : `?page=${item.page}`}`}
+          to={`/?page=${item.page}`}
           {...item}
         />
       )}

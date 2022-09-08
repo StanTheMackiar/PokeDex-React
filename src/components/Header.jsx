@@ -43,5 +43,5 @@ const HeaderSection = styled.section`
   justify-content: center;
   align-items: center;
   justify-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0 0 0;
 `;

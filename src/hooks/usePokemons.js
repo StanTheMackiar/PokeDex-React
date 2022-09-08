@@ -116,10 +116,8 @@ const usePokemons = () => {
         type2,
       };
     });
-
     return pokeData;
   };
-
   // Variables de retorno del hook
   return {
     loading,

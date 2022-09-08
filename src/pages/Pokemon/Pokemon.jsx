@@ -1,5 +1,5 @@
 // FrameWorks
-import { CircularProgress, Grow, Slide } from "@mui/material";
+import { CircularProgress, Slide } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 
@@ -20,20 +20,24 @@ import Atributes from "../../components/Atributes";
 import Stats from "../../components/Stats";
 import NavPokemonDetails from "../../components/NavPokemonDetails";
 import Message from "../../components/Message";
+import SelectPokemon from "../../components/SelectPokemon";
 
-const Pokemon = ({ setIsPokemonOpen }) => {
+const Pokemon = ({ setIsPokemonOpen, page }) => {
   const { id } = useParams();
-  const { pokeDetails: card, isLoading, setPokeDetails } = useDetails(id);
+  const { pokeDetails: card, isLoading } = useDetails(id);
   const [slideEffect, setSlideEffect] = useState("up");
+
 
   useEffect(() => {
     setIsPokemonOpen(true);
   }, []);
 
   const addComma = (str) => {
-    let newstr = str.slice(0, -1) + "," + str.slice(-1);
+    let newstr = str.slice(0, -1) + "." + str.slice(-1);
+    newstr = parseFloat(newstr);
     return newstr;
   };
+
   return (
     <section>
       {isLoading && (
@@ -56,54 +60,59 @@ const Pokemon = ({ setIsPokemonOpen }) => {
       )}
       {card && !isLoading && (
         <>
-          <NavPokemonDetails id={id} setSlideEffect={setSlideEffect}/>
+          <NavPokemonDetails id={id} setSlideEffect={setSlideEffect} />
           <Slide direction={slideEffect} in={true}>
             <section className="pokeDetailsBox">
-              <div className="back-button">
-                <Link to="/">
-                <Close
-                  sx={{
-                    margin: "0.3rem",
-                    cursor: "pointer",
-                    color: "white",
-                    background:
-                      "linear-gradient(#ad2121 20%, rgb(202, 50, 12) 100%)",
-                    borderRadius: "20%",
-                    padding: "0.5rem",
-                  }}
+
+              <div className="select-pokemon">
+                <SelectPokemon
+                  card={card}
+                  id={id}
                 />
+              </div>
+
+              <div className="close-button">
+                <Link to={`/?page=${page}`}>
+                  <Close
+                    sx={{
+                      cursor: "pointer",
+                      color: "white",
+                      background:
+                        "linear-gradient(#ad2121 20%, rgb(202, 50, 12) 100%)",
+                      borderRadius: "20%",
+                      padding: "0.3rem",
+                    }}
+                  />
                 </Link>
               </div>
 
               <div className="title">
-                <h2>
-                  {helpFirstLetterUC(card.name)} <i>#{helpAddZeros(id)}</i>
-                </h2>
+                <h2 className={`${card.type1.toLowerCase()}`}>{card.name}</h2>
+                <p>
+                  <span style={{ color: "#727171" }}>
+                    <i>#{helpAddZeros(id)}</i>
+                  </span>
+                </p>
               </div>
 
-              <div className="generation">
-                <h3>{helpFirstLetterUC(card.generation)}</h3>
-              </div>
-
-              <div className="imgContainer">
+              <div className={`imgContainer ${card.type1.toLowerCase()}card`}>
                 <img className="imgPokemon" src={card.img} alt="sprite" />
               </div>
 
               <div className="types">
                 {card.type1 && (
-                  <span className={`${card.type1} type`}>
-                    {helpFirstLetterUC(card.type1)}
-                  </span>
+                  <p className={`${card.type1.toLowerCase()} type`}>
+                    {(card.type1)}
+                  </p>
                 )}
                 {card.type2 && (
-                  <span className={`${card.type2} type`}>
-                    {helpFirstLetterUC(card.type2)}
-                  </span>
+                  <p className={`${card.type2.toLowerCase()} type`}>
+                    {(card.type2)}
+                  </p>
                 )}
               </div>
 
-              <div className="atributes">
-                <h3>Atributes</h3>
+              <div className={"atributes"}>
                 {card.weight && (
                   <Atributes
                     title={<b>Weight: </b>}
@@ -112,46 +121,47 @@ const Pokemon = ({ setIsPokemonOpen }) => {
                 )}
                 {card.height && (
                   <Atributes
-                    title={<b>Height: </b>}
+                    title={<strong>Height: </strong>}
                     value={`${card.height / 100} m`}
                   />
                 )}
                 {card.ability && (
                   <Atributes
                     title={<b>Ability: </b>}
-                    value={helpFirstLetterUC(card.ability)}
-                  />
-                )}
-                {card.color && (
-                  <Atributes
-                    title={<b>Color: </b>}
-                    value={helpFirstLetterUC(card.color)}
+                    value={(card.ability)}
                   />
                 )}
                 {card.habitat && (
                   <Atributes
                     title={<b>Habitat: </b>}
-                    value={helpFirstLetterUC(card.habitat)}
+                    value={(card.habitat)}
                   />
+                )}
+                {card.color && (
+                  <Atributes
+                    title={<b>Color: </b>}
+                    value={(card.color)}
+                  />
+                )}
+                {card.generation && (
+                  <Atributes
+                    title={<b>Generation: </b>}
+                    value={(card.generation)}
+                  />
+                )}
+                {card.features.is_legendary && (
+                  <Atributes title={<b>Legendary Pokémon</b>} value={""} />
+                )}
+                {card.features.is_mythical && (
+                  <Atributes title={<b>Mythical Pokémon</b>} value={""} />
+                )}
+                {card.features.is_baby && (
+                  <Atributes title={<b>Baby Pokémon</b>} value={""} />
                 )}
               </div>
 
               <div className="description">
-                <h3>Description</h3>
                 <p className="description-text">{card.description}</p>
-              </div>
-
-              <div className="features">
-                <h3>Features</h3>
-                <span className="feature">
-                  Is Legendary? {card.features.is_legendary ? "Yes" : "No"}
-                </span>
-                <span className="feature">
-                  Is Mythical? {card.features.is_mythical ? "Yes" : "No"}
-                </span>
-                <span className="feature">
-                  Is a Baby? {card.features.is_baby ? "Yes" : "No"}
-                </span>
               </div>
 
               <div className="stats">
@@ -196,6 +206,7 @@ const Pokemon = ({ setIsPokemonOpen }) => {
                     <div className="evo2">
                       <h4>{card.evo_chain.evo2 && "Final"}</h4>
                       <Card
+                        className={"evofinal"}
                         img={card.evo_chain.evo2.img}
                         name={card.evo_chain.evo2.name}
                         id={card.evo_chain.evo2.id}
@@ -207,8 +218,11 @@ const Pokemon = ({ setIsPokemonOpen }) => {
                   )}
                 </div>
               ) : (
-                <div className="evochain">
-                  <h3>This pokemon has no evolution</h3>
+                <div className="no-evo">
+                  <h3>
+                    {helpFirstLetterUC(card.name)} does not come from or evolve
+                    into any Pokémon.
+                  </h3>
                 </div>
               )}
             </section>

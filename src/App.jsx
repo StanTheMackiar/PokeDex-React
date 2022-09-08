@@ -76,7 +76,7 @@ function App() {
           ></Route>
           <Route
             path="/pokemon/:id"
-            element={<Pokemon setIsPokemonOpen={setIsPokemonOpen} />}
+            element={<Pokemon setIsPokemonOpen={setIsPokemonOpen} page={page} />}
           />
         </Routes>
         {response && !isPokemonOpen && (

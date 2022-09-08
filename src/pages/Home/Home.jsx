@@ -1,6 +1,5 @@
 // Frameworks
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 //Css
 import "./Home.css";
@@ -9,11 +8,6 @@ import "./Home.css";
 import Message from "../../components/Message";
 import Card from "../../components/Card/Card";
 
-// Helpers
-import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
-import { Zoom } from "@mui/material";
-import { helpAddZeros } from "../../helpers/helpAddZeros";
-import { Box } from "@mui/system";
 
 const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
   const [currentPage, setCurrentPage] = useState(page);
