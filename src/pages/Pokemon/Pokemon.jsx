@@ -13,7 +13,6 @@ import useDetails from "../../hooks/useDetails";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 // Helpers
-import { helpFirstLetterUC } from "../../helpers/helpFirstLetterUC";
 import { helpAddZeros } from "../../helpers/helpAddZeros";
 
 // Componentes
@@ -49,6 +48,13 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
     padding: "0.3rem",
   };
 
+  const arrowStyles = {
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.178)",
+    padding: "0.5rem",
+    borderRadius: "0.3rem",
+  };
+
   return (
     <section>
       {isLoading && (
@@ -77,9 +83,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
             setSlideEffect={setSlideEffect}
           />
           {/* Transicion */}
-          <Slide
-            direction={slideEffect}
-            in={true}>
+
             {/* Contenedor principal */}
             <section className="pokeDetailsBox">
               <div className="back-button">
@@ -226,6 +230,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                   {card.evo_chain[0] && (
                     <div className="evo-unique">
                       <Card
+                        key={card.evo_chain[0].id}
                         img={card.evo_chain[0].img}
                         name={card.evo_chain[0].name}
                         id={card.evo_chain[0].id}
@@ -241,14 +246,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                   {card.evo_chain[1] && (
                     <>
                       <div className="arrow-evo">
-                        <KeyboardDoubleArrowDownIcon
-                          sx={{
-                            color: "white",
-                            backgroundColor: "rgba(255, 255, 255, 0.178)",
-                            padding: "0.5rem",
-                            borderRadius: "0.3rem",
-                          }}
-                        />
+                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
                       </div>
 
                       {card.evo_chain[1].map((el) => {
@@ -279,15 +277,9 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                   {card.evo_chain[2] && (
                     <>
                       <div className="arrow-evo">
-                        <KeyboardDoubleArrowDownIcon
-                          sx={{
-                            color: "white",
-                            backgroundColor: "rgba(255, 255, 255, 0.178)",
-                            padding: "0.5rem",
-                            borderRadius: "0.3rem",
-                          }}
-                        />
+                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
                       </div>
+
                       {card.evo_chain[2].map((el) => {
                         return (
                           <div
@@ -316,7 +308,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 </div>
               )}
             </section>
-          </Slide>
+
         </>
       )}
     </section>

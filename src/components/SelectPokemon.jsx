@@ -27,7 +27,7 @@ const SelectPokemon = ({ card, id }) => {
                 const arrayID = el.pokemon.url.split("/");
                 const id = arrayID[6];
                 return (
-                  <MenuItem key={id} value={id}>
+                  <MenuItem key={`${id}select`} value={id}>
                     {helpNamePokemons(el.pokemon.name)}
                   </MenuItem>
                 );

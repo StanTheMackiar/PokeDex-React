@@ -32,6 +32,7 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
       if (search.length === 0) {
         pokemonLength = response.length;
         return response.slice(currentPage, currentPage + 20);
+        
       } else {
         const filterName = response.filter(
           (el) => el.name && el.name.includes(search)
@@ -45,12 +46,15 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
         const filterType2 = response.filter(
           (el) => el.type2 && el.type2.includes(search)
         );
-        const filtered = [
+
+        // Crea un nuevo objeto set, y con el spread operator de new se pasa a arreglo
+        const filtered = [...new Set([ 
           ...filterName,
           ...filterID,
-          ...filterType1,
+          ...filterType1, 
           ...filterType2,
-        ];
+        ])];
+        
         pokemonLength = filtered.length;
         return filtered.slice(currentPage, currentPage + 20);
       }
