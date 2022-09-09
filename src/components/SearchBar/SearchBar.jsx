@@ -1,4 +1,4 @@
-import { Divider, IconButton, InputBase, Paper } from "@mui/material";
+import { IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 
@@ -18,6 +18,7 @@ const SearchBar = ({ search, setSearch, setPage }) => {
     fontSize: "15px",
     color: "wheat",
     borderRadius: "0.5rem",
+    boxShadow: "none",
   };
 
   return (
@@ -34,12 +35,9 @@ const SearchBar = ({ search, setSearch, setPage }) => {
           ml: 1, 
           flex: 1,
           color: "wheat",
-          textAlign: "center" 
+          fontFamily: "inherit",
+          marginLeft: "1rem" 
         }}
-      />
-      <Divider
-        sx={{ height: 28, m: 0.5 }}
-        orientation="vertical"
       />
       <IconButton
         type="button"
