@@ -9,14 +9,14 @@ export default function PaginationLink({ page, setPage, pokemons }) {
   const [navPages, setNavPages] = useState(46);
 
   useEffect(() => {
-    setPage((parseFloat(query.get("page") || page)));
+    setPage(parseFloat(query.get("page") || page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
-    if(pokemons) setNavPages(Math.ceil(pokemons / 20));
-    if(!pokemons) setNavPages(1)
+    if (pokemons) setNavPages(Math.ceil(pokemons / 20));
+    if (!pokemons) setNavPages(1);
   }, [pokemons]);
-
 
   return (
     <Pagination

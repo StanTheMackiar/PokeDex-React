@@ -1,0 +1,56 @@
+import { Divider, IconButton, InputBase, Paper } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import React from "react";
+
+const SearchBar = ({ search, setSearch, setPage }) => {
+  const handleChange = (e) => {
+    setPage(1);
+    setSearch(e.target.value);
+  };
+
+  const styles = {
+    p: "0.3rem",
+    display: "flex",
+    alignItems: "center",
+    width: "15rem",
+    m: "1rem",
+    backgroundColor: "rgb(105, 15, 15)",
+    fontSize: "15px",
+    color: "wheat",
+    borderRadius: "0.5rem",
+  };
+
+  return (
+    <Paper
+      component="form"
+      sx={styles}>
+      <InputBase
+        className="search-bar"
+        type="text"
+        placeholder="Name, ID or Type..."
+        value={search}
+        onChange={handleChange}
+        sx={{ 
+          ml: 1, 
+          flex: 1,
+          color: "wheat",
+          textAlign: "center" 
+        }}
+      />
+      <Divider
+        sx={{ height: 28, m: 0.5 }}
+        orientation="vertical"
+      />
+      <IconButton
+        type="button"
+        sx={{ p: "10px" }}
+        aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
+  );
+};
+
+<input />;
+
+export default SearchBar;

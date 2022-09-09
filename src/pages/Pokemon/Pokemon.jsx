@@ -17,8 +17,8 @@ import { helpAddZeros } from "../../helpers/helpAddZeros";
 
 // Componentes
 import Card from "../../components/Card/Card";
-import Atributes from "../../components/Atributes";
-import Stats from "../../components/Stats";
+import AtributesSection from "../../components/Atributes/AtributesSection";
+import StatsSection from "../../components/Stats/StatsSection";
 import NavPokemonDetails from "../../components/NavPokemonDetails";
 import Message from "../../components/Message";
 import SelectPokemon from "../../components/SelectPokemon";
@@ -33,12 +33,6 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
   useEffect(() => {
     setIsPokemonOpen(true);
   }, [setIsPokemonOpen]);
-
-  const addComma = (str) => {
-    let newstr = str.toString().slice(0, -1) + "." + str.toString().slice(-1);
-    newstr = parseFloat(newstr);
-    return newstr;
-  };
 
   const buttonStyles = {
     cursor: "pointer",
@@ -86,19 +80,13 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
           <Slide
             direction={slideEffect}
             in={true}>
+              
             {/* Contenedor principal */}
             <section className="pokeDetailsBox">
               <div className="back-button">
                 <KeyboardReturnIcon
                   sx={buttonStyles}
                   onClick={() => navigate(-1)}
-                />
-              </div>
-
-              <div className="select-pokemon">
-                <SelectPokemon
-                  card={card}
-                  id={id}
                 />
               </div>
 
@@ -116,6 +104,14 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                   </span>
                 </h2>
               </div>
+
+              <div className="select-pokemon">
+                <SelectPokemon
+                  card={card}
+                  id={id}
+                />
+              </div>
+
 
               <div className={`imgContainer ${card.type1} bgColor`}>
                 <img
@@ -138,94 +134,15 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 )}
               </div>
 
-              <div className={"atributes"}>
-                {card.weight && (
-                  <Atributes
-                    title={<b>Weight: </b>}
-                    value={`${addComma(card.weight)} kg`}
-                  />
-                )}
-                {card.height && (
-                  <Atributes
-                    title={<strong>Height: </strong>}
-                    value={`${addComma(card.height)} m`}
-                  />
-                )}
-                {card.ability && (
-                  <Atributes
-                    title={<b>Ability: </b>}
-                    value={card.ability}
-                  />
-                )}
-                {card.habitat && (
-                  <Atributes
-                    title={<b>Habitat: </b>}
-                    value={card.habitat}
-                  />
-                )}
-                {card.color && (
-                  <Atributes
-                    title={<b>Color: </b>}
-                    value={card.color}
-                  />
-                )}
-                {card.generation && (
-                  <Atributes
-                    title={<b>Generation: </b>}
-                    value={card.generation}
-                  />
-                )}
-                {card.features.is_legendary && (
-                  <Atributes
-                    title={<b>Legendary Pokémon</b>}
-                    value={""}
-                  />
-                )}
-                {card.features.is_mythical && (
-                  <Atributes
-                    title={<b>Mythical Pokémon</b>}
-                    value={""}
-                  />
-                )}
-                {card.features.is_baby && (
-                  <Atributes
-                    title={<b>Baby Pokémon</b>}
-                    value={""}
-                  />
-                )}
-              </div>
+              <AtributesSection card={card}/>
 
               <div className="description">
                 <p className="description-text">{card.description}</p>
               </div>
 
-              <div className="stats">
-                <Stats
-                  title="HP"
-                  value={card.stats.hp}
-                />
-                <Stats
-                  title="Attack"
-                  value={card.stats.attack}
-                />
-                <Stats
-                  title="Defense"
-                  value={card.stats.defense}
-                />
-                <Stats
-                  title="Special Attack"
-                  value={card.stats.sp_attack}
-                />
-                <Stats
-                  title="Special Defense"
-                  value={card.stats.sp_defense}
-                />
-                <Stats
-                  title="Speed"
-                  value={card.stats.speed}
-                />
-              </div>
+              <StatsSection card={card}/>
 
+              
               {card.evo_chain && (
                 <div className="evochain">
                   <h3>Evolutions</h3>

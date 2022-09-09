@@ -1,0 +1,24 @@
+.stats-section {
+    background-color: rgb(208, 235, 243);
+    border-radius: 0.5rem;
+    font-size: 17px;
+    grid-column: span 3;
+  }
+.stats-grid{
+    display: grid;
+    grid-template-columns: 2fr 7fr 1fr;
+    align-items: center;
+    row-gap: 0.5rem;
+    margin: 1.2rem;
+    height: 3rem;
+    background-color: rgba(114, 206, 235, 0.219);
+    border-radius: 0.5rem;
+}
+.stats-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+.stats-value {
+    text-align: center;
+}

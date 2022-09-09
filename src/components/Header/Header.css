@@ -1,0 +1,20 @@
+.header-section {
+  grid-area: header;
+  z-index: 100;
+  background: rgb(164, 14, 14);
+  background: linear-gradient(
+    338deg,
+    rgba(164, 14, 14, 1) 0%,
+    rgba(99, 6, 6, 1) 100%
+  );
+  box-shadow: 2px 2px 5px rgb(22, 5, 5);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 25rem));
+  grid-template-rows: auto;
+  position: sticky;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 0 0 0;
+}
