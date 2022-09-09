@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 // Helper
 import { helpHttp } from "../helpers/helpHttp";
 import { helpAddZeros } from "../helpers/helpAddZeros";
+import helpGetID from "../helpers/helpGetID";
 
 const usePokemons = () => {
   const [loading, setLoading] = useState(false);
@@ -75,8 +76,7 @@ const usePokemons = () => {
   const pokemonData = (callback) => {
     
     const pokeData = response1.results.map((el) => {
-      const arrayID = el.url.split("/");
-      const id = arrayID[6];
+      const id = helpGetID(el.url);
       const name = el.name;
       const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${helpAddZeros(id)}.png`;
       let type1 = null;
