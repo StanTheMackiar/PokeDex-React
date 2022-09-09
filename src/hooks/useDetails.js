@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Hook
 import { useState, useEffect } from "react";
 
 // Helper
 import { helpAddZeros } from "../helpers/helpAddZeros";
 import helpGeneration from "../helpers/helpGeneration";
+import helpGetID from "../helpers/helpGetID";
 import { helpHttp } from "../helpers/helpHttp";
 import helpNamePokemons from "../helpers/helpNamePokemons";
 
@@ -21,8 +23,10 @@ const useDetails = (id) => {
     const getPokemon = async () => {
       setIsLoading(true);
       res = await helpHttp().get(`${urlBase}pokemon/${id}`);
+      console.log(res);
       if (!res.err) {
         species = res.species && (await helpHttp().get(res.species.url));
+        console.log(species);
         if (!species.err) {
           evo = species.evolution_chain
             ? await helpHttp().get(species.evolution_chain.url)
@@ -41,13 +45,12 @@ const useDetails = (id) => {
     getPokemon();
   }, [id]);
 
-  const getEvoData = async (name) => {
-    const res = await helpHttp().get(`${urlBase}pokemon/${name}`);
+  const getEvoData = async (urlID) => {
+    const res = await helpHttp().get(`${urlBase}pokemon/${urlID}`);
     if (!res.err) {
+      const name = res.name;
       const id = res.id;
-      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(
-        id
-      )}.png`;
+      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(id)}.png`;
       const type1 = res.types[0] ? res.types[0].type.name : null;
       const type2 = res.types[1] ? res.types[1].type.name : null;
 
@@ -72,15 +75,17 @@ const useDetails = (id) => {
       if (evo.chain.evolves_to.length === 0) return null;
 
       if (evo.chain.species) {
-        const name = evo.chain.species.name;
-        base = await getEvoData(name);
+        const url = evo.chain.species.url;
+        const id = helpGetID(url)
+        base = await getEvoData(id);
       }
 
       if (evo.chain.evolves_to.length > 0) {
         evo1 = await Promise.all(
           evo.chain.evolves_to.map(async (el) => {
-            const name = el.species.name
-            return await getEvoData(name);
+            const url = el.species.url;
+            const id = helpGetID(url)
+            return await getEvoData(id);
           })
         );
       } else return null;
@@ -88,13 +93,11 @@ const useDetails = (id) => {
       if (evo.chain.evolves_to[0].evolves_to.length > 0) {
         evo2 = await Promise.all(
           evo.chain.evolves_to[0].evolves_to.map(async (el) => {
-            const name = el.species.name;
-            return await getEvoData(name)
+            const url = el.species.url;
+            const id =  helpGetID(url);
+            return await getEvoData(id);
           })
-          
-
-        )
-        
+        );
       }
     } else return null;
 

@@ -83,7 +83,9 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
             setSlideEffect={setSlideEffect}
           />
           {/* Transicion */}
-
+          <Slide
+            direction={slideEffect}
+            in={true}>
             {/* Contenedor principal */}
             <section className="pokeDetailsBox">
               <div className="back-button">
@@ -308,7 +310,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 </div>
               )}
             </section>
-
+        </Slide>
         </>
       )}
     </section>
