@@ -22,6 +22,7 @@ const usePokemons = () => {
     const getURLPokemons = async () => {
       setLoading(true);
       response1 = await helpHttp().get(urlBase + "pokemon?limit=905");
+      console.log(response1);
       if (!response1.err) {
         for (let i = 1; i <= 18; i++) {
           response2 = await helpHttp().get(`${urlBase}type/${i}`);

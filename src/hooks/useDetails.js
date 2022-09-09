@@ -23,15 +23,15 @@ const useDetails = (id) => {
     const getPokemon = async () => {
       setIsLoading(true);
       res = await helpHttp().get(`${urlBase}pokemon/${id}`);
-      console.log(res);
+      // console.log(res);
       if (!res.err) {
         species = res.species && (await helpHttp().get(res.species.url));
-        console.log(species);
+        // console.log(species);
         if (!species.err) {
           evo = species.evolution_chain
             ? await helpHttp().get(species.evolution_chain.url)
             : null;
-          console.log(evo);
+          // console.log(evo);
         }
       } else {
         setIsLoading(false);
@@ -39,7 +39,7 @@ const useDetails = (id) => {
       }
       setPokeDetails(await details(res, species, evo));
       setIsLoading(false);
-      console.log(await details(res, species, evo));
+      // console.log(await details(res, species, evo));
     };
 
     getPokemon();
