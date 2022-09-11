@@ -71,7 +71,7 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
         rangePokemons().map((card) => {
           return (
             <Card
-              key={card.id}
+              key={crypto.randomUUID()}
               type1={card.type1}
               type2={card.type2}
               id={card.id}

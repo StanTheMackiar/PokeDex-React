@@ -147,9 +147,9 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 <div className="evochain">
                   <h3>Evolutions</h3>
                   {card.evo_chain[0] && (
-                    <div className="evo-unique">
+                    <div className="evo-unique" key={crypto.randomUUID()}>
                       <Card
-                        key={card.evo_chain[0].id}
+                        key={crypto.randomUUID()}
                         img={card.evo_chain[0].img}
                         name={card.evo_chain[0].name}
                         id={card.evo_chain[0].id}
@@ -177,7 +177,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                                 : "evo-unique"
                             }>
                             <Card
-                              key={`${el.id}0`}
+                              key={crypto.randomUUID()}
                               img={el.img}
                               name={el.name}
                               id={el.id}
@@ -208,7 +208,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                                 : "evo-unique"
                             }>
                             <Card
-                              key={`${el.id}1`}
+                              key={crypto.randomUUID()}
                               img={el.img}
                               name={el.name}
                               id={el.id}
