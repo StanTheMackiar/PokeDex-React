@@ -136,6 +136,90 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
               </div>
 
               <StatsSection card={card} />
+              
+              {card.evo_chain && (
+                <div className="evochain">
+                  <h3>Evolutions</h3>
+                  {card.evo_chain[0] && (
+                    <div className="evo-unique" key={crypto.randomUUID()}>
+                      <Card
+                        key={crypto.randomUUID()}
+                        img={card.evo_chain[0].img}
+                        name={card.evo_chain[0].name}
+                        id={card.evo_chain[0].id}
+                        type1={card.evo_chain[0].type1}
+                        type2={card.evo_chain[0].type2}
+                        transition={"no-transition"}
+                        bg={"no-bg"}
+                        imgBorder={"img-border"}
+                        titleEvolve={"title-evolve"}
+                      />
+                    </div>
+                  )}
+                  {card.evo_chain[1] && (
+                    <>
+                      <div className="arrow-evo">
+                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
+                      </div>
+
+                      {card.evo_chain[1].map((el) => {
+                        return (
+                          <div
+                            className={
+                              card.evo_chain[1].length > 1
+                                ? "evo-various"
+                                : "evo-unique"
+                            }>
+                            <Card
+                              key={crypto.randomUUID()}
+                              img={el.img}
+                              name={el.name}
+                              id={el.id}
+                              type1={el.type1}
+                              type2={el.type2}
+                              transition={"no-transition"}
+                              bg={"no-bg"}
+                              imgBorder={"img-border"}
+                              titleEvolve={"title-evolve"}
+                            />
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
+                  {card.evo_chain[2] && (
+                    <>
+                      <div className="arrow-evo">
+                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
+                      </div>
+
+                      {card.evo_chain[2].map((el) => {
+                        return (
+                          <div
+                            className={
+                              card.evo_chain[2].length > 1
+                                ? "evo-various"
+                                : "evo-unique"
+                            }>
+                            <Card
+                              key={crypto.randomUUID()}
+                              img={el.img}
+                              name={el.name}
+                              id={el.id}
+                              type1={el.type1}
+                              type2={el.type2}
+                              transition={"no-transition"}
+                              bg={"no-bg"}
+                              imgBorder={"img-border"}
+                              titleEvolve={"title-evolve"}
+                            />
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
+                </div>
+              )}
             </section>
           </Slide>
         </>
