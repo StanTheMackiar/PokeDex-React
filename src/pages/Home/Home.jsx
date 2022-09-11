@@ -24,8 +24,7 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
 
   useEffect(() => {
     setPokemons(pokemonLength);
-    console.log(`Total Pokemones: ${pokemonLength}`);
-  }, [response, search, pokemonLength, setPokemons]);
+  }, [response, search]);
 
   const rangePokemons = () => {
     if (response) {

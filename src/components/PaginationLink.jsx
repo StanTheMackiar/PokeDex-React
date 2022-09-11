@@ -19,24 +19,26 @@ export default function PaginationLink({ page, setPage, pokemons }) {
   }, [pokemons]);
 
   return (
-    <Pagination
-      page={page}
-      count={navPages}
-      shape="rounded"
-      color={"primary"}
-      siblingCount={0}
-      sx={{
-        margin: "1rem",
-        display: "flex",
-        justifyContent: "center",
-      }}
-      renderItem={(item) => (
-        <PaginationItem
-          component={Link}
-          to={`/?page=${item.page}`}
-          {...item}
-        />
-      )}
-    />
+    <nav>
+      <Pagination
+        page={page}
+        count={navPages}
+        shape="rounded"
+        color={"primary"}
+        siblingCount={0}
+        sx={{
+          margin: "1rem",
+          display: "flex",
+          justifyContent: "center",
+        }}
+        renderItem={(item) => (
+          <PaginationItem
+            component={Link}
+            to={`/?page=${item.page}`}
+            {...item}
+          />
+        )}
+      />
+    </nav>
   );
 }

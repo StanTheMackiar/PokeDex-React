@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // Hook
 import { useState, useEffect } from "react";
 
@@ -9,48 +8,46 @@ import helpGetID from "../helpers/helpGetID";
 import { helpHttp } from "../helpers/helpHttp";
 import helpNamePokemons from "../helpers/helpNamePokemons";
 
+let res,
+  evo,
+  species = null;
+
 const useDetails = (id) => {
   const [pokeDetails, setPokeDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const urlBase = "https://pokeapi.co/api/v2/";
 
-  let res,
-    evo,
-    species = null;
-
-  useEffect(() => {
-    const getPokemon = async () => {
-      setIsLoading(true);
-      res = await helpHttp().get(`${urlBase}pokemon/${id}`);
-      // console.log(res);
-      if (!res.err) {
-        species = res.species && (await helpHttp().get(res.species.url));
-        // console.log(species);
-        if (!species.err) {
-          evo = species.evolution_chain
-            ? await helpHttp().get(species.evolution_chain.url)
-            : null;
-          // console.log(evo);
-        }
-      } else {
-        setIsLoading(false);
-        return setPokeDetails(null);
+  const getPokemon = async () => {
+    setIsLoading(true);
+    res = await helpHttp().get(`${urlBase}pokemon/${id}`);
+    // console.log(res);
+    if (!res.err) {
+      species = res.species && (await helpHttp().get(res.species.url));
+      // console.log(species);
+      if (!species.err) {
+        evo = species.evolution_chain
+          ? await helpHttp().get(species.evolution_chain.url)
+          : null;
+        // console.log(evo);
       }
-      setPokeDetails(await details(res, species, evo));
+    } else {
       setIsLoading(false);
-      // console.log(await details(res, species, evo));
-    };
-
-    getPokemon();
-  }, [id]);
+      return setPokeDetails(null);
+    }
+    setPokeDetails(await details(res, species, evo));
+    setIsLoading(false);
+    // console.log(await details(res, species, evo));
+  };
 
   const getEvoData = async (urlID) => {
     const res = await helpHttp().get(`${urlBase}pokemon/${urlID}`);
     if (!res.err) {
       const name = res.name;
       const id = res.id;
-      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(id)}.png`;
+      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${helpAddZeros(
+        id
+      )}.png`;
       const type1 = res.types[0] ? res.types[0].type.name : null;
       const type2 = res.types[1] ? res.types[1].type.name : null;
 
@@ -76,7 +73,7 @@ const useDetails = (id) => {
 
       if (evo.chain.species) {
         const url = evo.chain.species.url;
-        const id = helpGetID(url)
+        const id = helpGetID(url);
         base = await getEvoData(id);
       }
 
@@ -84,7 +81,7 @@ const useDetails = (id) => {
         evo1 = await Promise.all(
           evo.chain.evolves_to.map(async (el) => {
             const url = el.species.url;
-            const id = helpGetID(url)
+            const id = helpGetID(url);
             return await getEvoData(id);
           })
         );
@@ -94,7 +91,7 @@ const useDetails = (id) => {
         evo2 = await Promise.all(
           evo.chain.evolves_to[0].evolves_to.map(async (el) => {
             const url = el.species.url;
-            const id =  helpGetID(url);
+            const id = helpGetID(url);
             return await getEvoData(id);
           })
         );
@@ -154,6 +151,10 @@ const useDetails = (id) => {
       color,
     };
   };
+
+  useEffect(() => {
+    getPokemon();
+  }, [id]);
 
   return {
     pokeDetails,

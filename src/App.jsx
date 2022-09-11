@@ -16,10 +16,11 @@ import { CircularProgress } from "@mui/material";
 function App() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const { response, loading } = usePokemons();
   const [pokemons, setPokemons] = useState(null);
   const [isPokemonOpen, setIsPokemonOpen] = useState(false);
 
+
+  const { response, loading } = usePokemons()
   return (
     <HashRouter>
       <Header

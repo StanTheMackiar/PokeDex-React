@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import Select from "@mui/material/Select";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import helpGetID from "../helpers/helpGetID";
 import helpNamePokemons from "../helpers/helpNamePokemons";
 
 const SelectPokemon = ({ card, id }) => {
@@ -12,7 +13,7 @@ const SelectPokemon = ({ card, id }) => {
   };
 
   return (
-    <>
+    <div className="select-pokemon">
       {card.varieties.length > 1 && (
         <div className="select">
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -24,10 +25,9 @@ const SelectPokemon = ({ card, id }) => {
               label="Form"
             >
               {card.varieties.map((el) => {
-                const arrayID = el.pokemon.url.split("/");
-                const id = arrayID[6];
+                const idForm = helpGetID(el.pokemon.url);
                 return (
-                  <MenuItem key={`${id}select`} value={id}>
+                  <MenuItem key={crypto.randomUUID()} value={idForm}>
                     {helpNamePokemons(el.pokemon.name)}
                   </MenuItem>
                 );
@@ -36,7 +36,7 @@ const SelectPokemon = ({ card, id }) => {
           </FormControl>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

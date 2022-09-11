@@ -32,7 +32,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
 
   useEffect(() => {
     setIsPokemonOpen(true);
-  }, [setIsPokemonOpen]);
+  }, []);
 
   const buttonStyles = {
     cursor: "pointer",
@@ -80,7 +80,8 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
           <Slide
             direction={slideEffect}
             in={true}>
-              
+
+
             {/* Contenedor principal */}
             <section className="pokeDetailsBox">
               <div className="back-button">
@@ -105,13 +106,7 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 </h2>
               </div>
 
-              <div className="select-pokemon">
-                <SelectPokemon
-                  card={card}
-                  id={id}
-                />
-              </div>
-
+              <SelectPokemon card={card} id={id}/>
 
               <div className={`imgContainer ${card.type1} bgColor`}>
                 <img
@@ -134,100 +129,15 @@ const Pokemon = ({ setIsPokemonOpen, page }) => {
                 )}
               </div>
 
-              <AtributesSection card={card}/>
+              <AtributesSection card={card} />
 
               <div className="description">
                 <p className="description-text">{card.description}</p>
               </div>
 
-              <StatsSection card={card}/>
-
-              
-              {card.evo_chain && (
-                <div className="evochain">
-                  <h3>Evolutions</h3>
-                  {card.evo_chain[0] && (
-                    <div className="evo-unique" key={crypto.randomUUID()}>
-                      <Card
-                        key={crypto.randomUUID()}
-                        img={card.evo_chain[0].img}
-                        name={card.evo_chain[0].name}
-                        id={card.evo_chain[0].id}
-                        type1={card.evo_chain[0].type1}
-                        type2={card.evo_chain[0].type2}
-                        transition={"no-transition"}
-                        bg={"no-bg"}
-                        imgBorder={"img-border"}
-                        titleEvolve={"title-evolve"}
-                      />
-                    </div>
-                  )}
-                  {card.evo_chain[1] && (
-                    <>
-                      <div className="arrow-evo">
-                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
-                      </div>
-
-                      {card.evo_chain[1].map((el) => {
-                        return (
-                          <div
-                            className={
-                              card.evo_chain[1].length > 1
-                                ? "evo-various"
-                                : "evo-unique"
-                            }>
-                            <Card
-                              key={crypto.randomUUID()}
-                              img={el.img}
-                              name={el.name}
-                              id={el.id}
-                              type1={el.type1}
-                              type2={el.type2}
-                              transition={"no-transition"}
-                              bg={"no-bg"}
-                              imgBorder={"img-border"}
-                              titleEvolve={"title-evolve"}
-                            />
-                          </div>
-                        );
-                      })}
-                    </>
-                  )}
-                  {card.evo_chain[2] && (
-                    <>
-                      <div className="arrow-evo">
-                        <KeyboardDoubleArrowDownIcon sx={arrowStyles} />
-                      </div>
-
-                      {card.evo_chain[2].map((el) => {
-                        return (
-                          <div
-                            className={
-                              card.evo_chain[2].length > 1
-                                ? "evo-various"
-                                : "evo-unique"
-                            }>
-                            <Card
-                              key={crypto.randomUUID()}
-                              img={el.img}
-                              name={el.name}
-                              id={el.id}
-                              type1={el.type1}
-                              type2={el.type2}
-                              transition={"no-transition"}
-                              bg={"no-bg"}
-                              imgBorder={"img-border"}
-                              titleEvolve={"title-evolve"}
-                            />
-                          </div>
-                        );
-                      })}
-                    </>
-                  )}
-                </div>
-              )}
+              <StatsSection card={card} />
             </section>
-        </Slide>
+          </Slide>
         </>
       )}
     </section>

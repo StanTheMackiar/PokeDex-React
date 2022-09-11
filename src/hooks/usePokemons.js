@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // Hook
 import { useState, useEffect } from "react";
 
@@ -18,27 +17,23 @@ const usePokemons = () => {
   let types = [];
 
   // Peticiones y ejecucion de la logica
-  useEffect(() => {
-    const getURLPokemons = async () => {
-      setLoading(true);
-      response1 = await helpHttp().get(urlBase + "pokemon?limit=905");
-      console.log(response1);
-      if (!response1.err) {
-        for (let i = 1; i <= 18; i++) {
-          response2 = await helpHttp().get(`${urlBase}type/${i}`);
-          types = [...types, response2];
-        }
-      } else {
-        setLoading(false);
-        return setResponse(response1);
+
+  const getURLPokemons = async () => {
+    setLoading(true);
+    response1 = await helpHttp().get(urlBase + "pokemon?limit=905");
+    if (!response1.err) {
+      for (let i = 1; i <= 18; i++) {
+        response2 = await helpHttp().get(`${urlBase}type/${i}`);
+        types = [...types, response2];
       }
-
+    } else {
       setLoading(false);
-      setResponse(pokemonData(getPokemonTypes()))
-    };
+      return setResponse(response1);
+    }
 
-    getURLPokemons();
-  }, []);
+    setLoading(false);
+    setResponse(pokemonData(getPokemonTypes()));
+  };
 
   // Obtiene un array con cada tipo y sus Pokemon
   const getPokemonTypes = () => {
@@ -75,11 +70,12 @@ const usePokemons = () => {
 
   // Une toda la informacion en un solo objeto
   const pokemonData = (callback) => {
-    
     const pokeData = response1.results.map((el) => {
       const id = helpGetID(el.url);
       const name = el.name;
-      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${helpAddZeros(id)}.png`;
+      const img = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${helpAddZeros(
+        id
+      )}.png`;
       let type1 = null;
       let type2 = null;
 
@@ -120,6 +116,11 @@ const usePokemons = () => {
     });
     return pokeData;
   };
+
+  useEffect(() => {
+    getURLPokemons();
+  }, []);
+
   // Variables de retorno del hook
   return {
     loading,
