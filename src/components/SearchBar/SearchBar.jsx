@@ -1,12 +1,11 @@
 import { IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
+import React, { useContext } from "react";
+import SearchContext from "../../context/SearchContext";
 
-const SearchBar = ({ search, setSearch, setPage }) => {
-  const handleChange = (e) => {
-    setPage(1);
-    setSearch(e.target.value);
-  };
+const SearchBar = () => {
+
+  const {search, handleChange} = useContext(SearchContext)
 
   const styles = {
     p: "0.3rem",

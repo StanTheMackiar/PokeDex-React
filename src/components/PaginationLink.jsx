@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import SearchContext from "../context/SearchContext";
 
-export default function PaginationLink({ page, setPage, pokemons }) {
+export default function PaginationLink({ pokemons }) {
+  const { page, setPage } = useContext(SearchContext)
   const { search } = useLocation();
   const query = new URLSearchParams(search);
-  const [navPages, setNavPages] = useState(46);
+  const [ navPages, setNavPages ] = useState(46);
 
   useEffect(() => {
     setPage(parseFloat(query.get("page") || page));

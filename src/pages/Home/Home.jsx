@@ -1,5 +1,5 @@
 // Frameworks
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 //Css
 import "./Home.css";
@@ -7,9 +7,11 @@ import "./Home.css";
 // Componentes
 import Message from "../../components/Message";
 import Card from "../../components/Card/Card";
+import SearchContext from "../../context/SearchContext";
 
 
-const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
+const Home = ({ response, setPokemons, setIsPokemonOpen }) => {
+  let { search, page } = useContext(SearchContext)
   const [currentPage, setCurrentPage] = useState(page);
   search = search.toLowerCase();
   let pokemonLength;
@@ -24,6 +26,7 @@ const Home = ({ search, page, response, setPokemons, setIsPokemonOpen }) => {
 
   useEffect(() => {
     setPokemons(pokemonLength);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response, search]);
 
   const rangePokemons = () => {

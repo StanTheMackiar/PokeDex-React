@@ -1,22 +1,19 @@
 // Frameworks
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
 //Componentes
-import App from './App';
+import App from "./App";
 
 // Css
-import './index.css'
+import "./index.css";
+import { SearchProvider } from "./context/SearchContext";
 
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
     <App />
-  // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

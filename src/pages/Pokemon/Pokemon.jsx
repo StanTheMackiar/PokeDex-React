@@ -1,6 +1,6 @@
 // FrameWorks
 import { CircularProgress, Slide } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
@@ -23,16 +23,18 @@ import NavPokemonDetails from "../../components/NavPokemonDetails";
 import Message from "../../components/Message";
 import SelectPokemon from "../../components/SelectPokemon";
 import helpNamePokemons from "../../helpers/helpNamePokemons";
+import SearchContext from "../../context/SearchContext";
 
-const Pokemon = ({ setIsPokemonOpen, page }) => {
+const Pokemon = ({ setIsPokemonOpen }) => {
   const { id } = useParams();
   const { pokeDetails: card, isLoading } = useDetails(id);
   const [slideEffect, setSlideEffect] = useState("up");
   const navigate = useNavigate();
+  const { page } = useContext(SearchContext)
 
   useEffect(() => {
     setIsPokemonOpen(true);
-  }, []);
+  }, [setIsPokemonOpen]);
 
   const buttonStyles = {
     cursor: "pointer",
